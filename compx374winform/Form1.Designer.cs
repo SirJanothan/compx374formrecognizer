@@ -28,112 +28,137 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonRecognize = new System.Windows.Forms.Button();
-            this.buttonTrainModel = new System.Windows.Forms.Button();
-            this.buttonTrainLabels = new System.Windows.Forms.Button();
-            this.buttonManage = new System.Windows.Forms.Button();
-            this.buttonAnalyzeForm = new System.Windows.Forms.Button();
-            this.buttonSelectFolder = new System.Windows.Forms.Button();
-            this.buttonSelectForm = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.folderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.formToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modelWithLabelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.recogniseContentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.analyzeFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageModelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // buttonRecognize
+            // menuStrip1
             // 
-            this.buttonRecognize.Location = new System.Drawing.Point(12, 12);
-            this.buttonRecognize.Name = "buttonRecognize";
-            this.buttonRecognize.Size = new System.Drawing.Size(214, 23);
-            this.buttonRecognize.TabIndex = 0;
-            this.buttonRecognize.Text = "Recognize Content";
-            this.buttonRecognize.UseVisualStyleBackColor = true;
-            this.buttonRecognize.Click += new System.EventHandler(this.ButtonRecognize_Click);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectToolStripMenuItem,
+            this.trainToolStripMenuItem,
+            this.manageToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(673, 24);
+            this.menuStrip1.TabIndex = 7;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // buttonTrainModel
+            // selectToolStripMenuItem
             // 
-            this.buttonTrainModel.Location = new System.Drawing.Point(12, 41);
-            this.buttonTrainModel.Name = "buttonTrainModel";
-            this.buttonTrainModel.Size = new System.Drawing.Size(214, 23);
-            this.buttonTrainModel.TabIndex = 1;
-            this.buttonTrainModel.Text = "Train Model";
-            this.buttonTrainModel.UseVisualStyleBackColor = true;
-            this.buttonTrainModel.Click += new System.EventHandler(this.ButtonTrainModel_Click);
+            this.selectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.folderToolStripMenuItem,
+            this.formToolStripMenuItem});
+            this.selectToolStripMenuItem.Name = "selectToolStripMenuItem";
+            this.selectToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.selectToolStripMenuItem.Text = "Select";
             // 
-            // buttonTrainLabels
+            // folderToolStripMenuItem
             // 
-            this.buttonTrainLabels.Location = new System.Drawing.Point(12, 70);
-            this.buttonTrainLabels.Name = "buttonTrainLabels";
-            this.buttonTrainLabels.Size = new System.Drawing.Size(214, 23);
-            this.buttonTrainLabels.TabIndex = 2;
-            this.buttonTrainLabels.Text = "Train Model With Labels";
-            this.buttonTrainLabels.UseVisualStyleBackColor = true;
-            this.buttonTrainLabels.Click += new System.EventHandler(this.ButtonTrainLabels_Click);
+            this.folderToolStripMenuItem.Name = "folderToolStripMenuItem";
+            this.folderToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.folderToolStripMenuItem.Text = "Folder";
+            this.folderToolStripMenuItem.Click += new System.EventHandler(this.FolderToolStripMenuItem_Click);
             // 
-            // buttonManage
+            // formToolStripMenuItem
             // 
-            this.buttonManage.Location = new System.Drawing.Point(12, 128);
-            this.buttonManage.Name = "buttonManage";
-            this.buttonManage.Size = new System.Drawing.Size(214, 23);
-            this.buttonManage.TabIndex = 3;
-            this.buttonManage.Text = "Manage Models";
-            this.buttonManage.UseVisualStyleBackColor = true;
-            this.buttonManage.Click += new System.EventHandler(this.ButtonManage_Click);
+            this.formToolStripMenuItem.Name = "formToolStripMenuItem";
+            this.formToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.formToolStripMenuItem.Text = "Form";
+            this.formToolStripMenuItem.Click += new System.EventHandler(this.FormToolStripMenuItem_Click);
             // 
-            // buttonAnalyzeForm
+            // trainToolStripMenuItem
             // 
-            this.buttonAnalyzeForm.Location = new System.Drawing.Point(12, 99);
-            this.buttonAnalyzeForm.Name = "buttonAnalyzeForm";
-            this.buttonAnalyzeForm.Size = new System.Drawing.Size(214, 23);
-            this.buttonAnalyzeForm.TabIndex = 4;
-            this.buttonAnalyzeForm.Text = "Analyze Form";
-            this.buttonAnalyzeForm.UseVisualStyleBackColor = true;
-            this.buttonAnalyzeForm.Click += new System.EventHandler(this.ButtonAnalyzeForm_Click);
+            this.trainToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.modelToolStripMenuItem,
+            this.modelWithLabelsToolStripMenuItem,
+            this.recogniseContentToolStripMenuItem});
+            this.trainToolStripMenuItem.Name = "trainToolStripMenuItem";
+            this.trainToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.trainToolStripMenuItem.Text = "Train";
             // 
-            // buttonSelectFolder
+            // modelToolStripMenuItem
             // 
-            this.buttonSelectFolder.Location = new System.Drawing.Point(12, 221);
-            this.buttonSelectFolder.Name = "buttonSelectFolder";
-            this.buttonSelectFolder.Size = new System.Drawing.Size(214, 23);
-            this.buttonSelectFolder.TabIndex = 5;
-            this.buttonSelectFolder.Text = "Select Folder";
-            this.buttonSelectFolder.UseVisualStyleBackColor = true;
-            this.buttonSelectFolder.Click += new System.EventHandler(this.ButtonSelectFiles_Click);
+            this.modelToolStripMenuItem.Name = "modelToolStripMenuItem";
+            this.modelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modelToolStripMenuItem.Text = "Model";
+            this.modelToolStripMenuItem.Click += new System.EventHandler(this.ModelToolStripMenuItem_Click);
             // 
-            // buttonSelectForm
+            // modelWithLabelsToolStripMenuItem
             // 
-            this.buttonSelectForm.Location = new System.Drawing.Point(13, 251);
-            this.buttonSelectForm.Name = "buttonSelectForm";
-            this.buttonSelectForm.Size = new System.Drawing.Size(213, 23);
-            this.buttonSelectForm.TabIndex = 6;
-            this.buttonSelectForm.Text = "Select a Form";
-            this.buttonSelectForm.UseVisualStyleBackColor = true;
-            this.buttonSelectForm.Click += new System.EventHandler(this.ButtonSelectForm_Click);
+            this.modelWithLabelsToolStripMenuItem.Name = "modelWithLabelsToolStripMenuItem";
+            this.modelWithLabelsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modelWithLabelsToolStripMenuItem.Text = "Model With Labels";
+            this.modelWithLabelsToolStripMenuItem.Click += new System.EventHandler(this.ModelWithLabelsToolStripMenuItem_Click);
+            // 
+            // recogniseContentToolStripMenuItem
+            // 
+            this.recogniseContentToolStripMenuItem.Name = "recogniseContentToolStripMenuItem";
+            this.recogniseContentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.recogniseContentToolStripMenuItem.Text = "Recognise Content";
+            this.recogniseContentToolStripMenuItem.Click += new System.EventHandler(this.RecogniseContentToolStripMenuItem_Click);
+            // 
+            // manageToolStripMenuItem
+            // 
+            this.manageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.analyzeFormToolStripMenuItem,
+            this.manageModelsToolStripMenuItem});
+            this.manageToolStripMenuItem.Name = "manageToolStripMenuItem";
+            this.manageToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.manageToolStripMenuItem.Text = "Manage";
+            // 
+            // analyzeFormToolStripMenuItem
+            // 
+            this.analyzeFormToolStripMenuItem.Name = "analyzeFormToolStripMenuItem";
+            this.analyzeFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.analyzeFormToolStripMenuItem.Text = "Analyze Form";
+            this.analyzeFormToolStripMenuItem.Click += new System.EventHandler(this.AnalyzeFormToolStripMenuItem_Click);
+            // 
+            // manageModelsToolStripMenuItem
+            // 
+            this.manageModelsToolStripMenuItem.Name = "manageModelsToolStripMenuItem";
+            this.manageModelsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.manageModelsToolStripMenuItem.Text = "Manage Models";
+            this.manageModelsToolStripMenuItem.Click += new System.EventHandler(this.ManageModelsToolStripMenuItem_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.buttonSelectForm);
-            this.Controls.Add(this.buttonSelectFolder);
-            this.Controls.Add(this.buttonAnalyzeForm);
-            this.Controls.Add(this.buttonManage);
-            this.Controls.Add(this.buttonTrainLabels);
-            this.Controls.Add(this.buttonTrainModel);
-            this.Controls.Add(this.buttonRecognize);
+            this.ClientSize = new System.Drawing.Size(673, 535);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button buttonRecognize;
-        private System.Windows.Forms.Button buttonTrainModel;
-        private System.Windows.Forms.Button buttonTrainLabels;
-        private System.Windows.Forms.Button buttonManage;
-        private System.Windows.Forms.Button buttonAnalyzeForm;
-        private System.Windows.Forms.Button buttonSelectFolder;
-        private System.Windows.Forms.Button buttonSelectForm;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem selectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem folderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem formToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem trainToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modelWithLabelsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem recogniseContentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem analyzeFormToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manageModelsToolStripMenuItem;
     }
 }
 

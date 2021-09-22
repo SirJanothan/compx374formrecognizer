@@ -250,37 +250,7 @@ namespace compx374winform
             trainingClient.DeleteModel(model.ModelId);
         }
 
-        private void ButtonRecognize_Click(object sender, EventArgs e)
-        {
-            var recognizeContent = RecognizeContent(recognizerClient);
-            //Task.WaitAll(recognizeContent);
-        }
-
-        private void ButtonTrainModel_Click(object sender, EventArgs e)
-        {
-            var trainModel = TrainModel(trainingClient, trainingDataUrl);
-            //Task.WaitAll(trainModel);
-        }
-
-        private void ButtonTrainLabels_Click(object sender, EventArgs e)
-        {
-            //var trainModelWithLabels = TrainModelWithLabels(trainingClient, trainingDataUrl);
-            //Task.WaitAll(trainModel);
-        }
-
-        private void ButtonAnalyzeForm_Click(object sender, EventArgs e)
-        {
-            var analyzeForm = AnalyzePdfForm(recognizerClient, modelId, formUrl);
-            //Task.WaitAll(analyzeForm);
-        }
-
-        private void ButtonManage_Click(object sender, EventArgs e)
-        {
-            var manageModels = ManageModels(trainingClient, trainingDataUrl);
-            //Task.WaitAll(manageModels);
-        }
-
-        private void ButtonSelectFiles_Click(object sender, EventArgs e)
+        private void FolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() == DialogResult.OK)
@@ -289,14 +259,44 @@ namespace compx374winform
             }
         }
 
-        private void ButtonSelectForm_Click(object sender, EventArgs e)
+        private void FormToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var fileDialog = new OpenFileDialog();
+
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
                 FileStream fs = File.OpenRead(fileDialog.FileName);
                 var analyzeForm = AnalyzePdfForm(recognizerClient, modelId, fs);
             }
+        }
+
+        private void ModelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var trainModel = TrainModel(trainingClient, trainingDataUrl);
+            //Task.WaitAll(trainModel);
+        }
+
+        private void ModelWithLabelsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //var trainModelWithLabels = TrainModelWithLabels(trainingClient, trainingDataUrl);
+            //Task.WaitAll(trainModel);
+        }
+        private void RecogniseContentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var recognizeContent = RecognizeContent(recognizerClient);
+            //Task.WaitAll(recognizeContent);
+        }
+
+        private void AnalyzeFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var analyzeForm = AnalyzePdfForm(recognizerClient, modelId, formUrl);
+            //Task.WaitAll(analyzeForm);
+        }
+
+        private void ManageModelsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var manageModels = ManageModels(trainingClient, trainingDataUrl);
+            //Task.WaitAll(manageModels);
         }
     }
 }
