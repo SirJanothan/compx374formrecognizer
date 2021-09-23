@@ -39,6 +39,15 @@
             this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analyzeFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageModelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.azureStorageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewBlobContainersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createNewContainerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listBoxContainers = new System.Windows.Forms.ListBox();
+            this.listBoxBlobs = new System.Windows.Forms.ListBox();
+            this.buttonNewContainer = new System.Windows.Forms.Button();
+            this.buttonUploadFile = new System.Windows.Forms.Button();
+            this.textBoxContainerName = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,7 +56,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.selectToolStripMenuItem,
             this.trainToolStripMenuItem,
-            this.manageToolStripMenuItem});
+            this.manageToolStripMenuItem,
+            this.azureStorageToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(673, 24);
@@ -90,21 +100,21 @@
             // modelToolStripMenuItem
             // 
             this.modelToolStripMenuItem.Name = "modelToolStripMenuItem";
-            this.modelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modelToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.modelToolStripMenuItem.Text = "Model";
             this.modelToolStripMenuItem.Click += new System.EventHandler(this.ModelToolStripMenuItem_Click);
             // 
             // modelWithLabelsToolStripMenuItem
             // 
             this.modelWithLabelsToolStripMenuItem.Name = "modelWithLabelsToolStripMenuItem";
-            this.modelWithLabelsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modelWithLabelsToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.modelWithLabelsToolStripMenuItem.Text = "Model With Labels";
             this.modelWithLabelsToolStripMenuItem.Click += new System.EventHandler(this.ModelWithLabelsToolStripMenuItem_Click);
             // 
             // recogniseContentToolStripMenuItem
             // 
             this.recogniseContentToolStripMenuItem.Name = "recogniseContentToolStripMenuItem";
-            this.recogniseContentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.recogniseContentToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.recogniseContentToolStripMenuItem.Text = "Recognise Content";
             this.recogniseContentToolStripMenuItem.Click += new System.EventHandler(this.RecogniseContentToolStripMenuItem_Click);
             // 
@@ -120,22 +130,101 @@
             // analyzeFormToolStripMenuItem
             // 
             this.analyzeFormToolStripMenuItem.Name = "analyzeFormToolStripMenuItem";
-            this.analyzeFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.analyzeFormToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.analyzeFormToolStripMenuItem.Text = "Analyze Form";
             this.analyzeFormToolStripMenuItem.Click += new System.EventHandler(this.AnalyzeFormToolStripMenuItem_Click);
             // 
             // manageModelsToolStripMenuItem
             // 
             this.manageModelsToolStripMenuItem.Name = "manageModelsToolStripMenuItem";
-            this.manageModelsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.manageModelsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.manageModelsToolStripMenuItem.Text = "Manage Models";
             this.manageModelsToolStripMenuItem.Click += new System.EventHandler(this.ManageModelsToolStripMenuItem_Click);
+            // 
+            // azureStorageToolStripMenuItem
+            // 
+            this.azureStorageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewBlobContainersToolStripMenuItem,
+            this.createNewContainerToolStripMenuItem});
+            this.azureStorageToolStripMenuItem.Name = "azureStorageToolStripMenuItem";
+            this.azureStorageToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
+            this.azureStorageToolStripMenuItem.Text = "Azure Storage";
+            // 
+            // viewBlobContainersToolStripMenuItem
+            // 
+            this.viewBlobContainersToolStripMenuItem.Name = "viewBlobContainersToolStripMenuItem";
+            this.viewBlobContainersToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.viewBlobContainersToolStripMenuItem.Text = "View Blob Containers";
+            // 
+            // createNewContainerToolStripMenuItem
+            // 
+            this.createNewContainerToolStripMenuItem.Name = "createNewContainerToolStripMenuItem";
+            this.createNewContainerToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.createNewContainerToolStripMenuItem.Text = "Create New Container";
+            this.createNewContainerToolStripMenuItem.Click += new System.EventHandler(this.CreateNewContainerToolStripMenuItem_Click);
+            // 
+            // listBoxContainers
+            // 
+            this.listBoxContainers.FormattingEnabled = true;
+            this.listBoxContainers.Location = new System.Drawing.Point(12, 69);
+            this.listBoxContainers.Name = "listBoxContainers";
+            this.listBoxContainers.Size = new System.Drawing.Size(152, 95);
+            this.listBoxContainers.TabIndex = 8;
+            // 
+            // listBoxBlobs
+            // 
+            this.listBoxBlobs.FormattingEnabled = true;
+            this.listBoxBlobs.Location = new System.Drawing.Point(170, 69);
+            this.listBoxBlobs.Name = "listBoxBlobs";
+            this.listBoxBlobs.Size = new System.Drawing.Size(151, 95);
+            this.listBoxBlobs.TabIndex = 9;
+            // 
+            // buttonNewContainer
+            // 
+            this.buttonNewContainer.Location = new System.Drawing.Point(12, 269);
+            this.buttonNewContainer.Name = "buttonNewContainer";
+            this.buttonNewContainer.Size = new System.Drawing.Size(151, 23);
+            this.buttonNewContainer.TabIndex = 10;
+            this.buttonNewContainer.Text = "Create New Container";
+            this.buttonNewContainer.UseVisualStyleBackColor = true;
+            this.buttonNewContainer.Click += new System.EventHandler(this.ButtonNewContainer_Click);
+            // 
+            // buttonUploadFile
+            // 
+            this.buttonUploadFile.Location = new System.Drawing.Point(170, 171);
+            this.buttonUploadFile.Name = "buttonUploadFile";
+            this.buttonUploadFile.Size = new System.Drawing.Size(151, 23);
+            this.buttonUploadFile.TabIndex = 11;
+            this.buttonUploadFile.Text = "Upload File to Container";
+            this.buttonUploadFile.UseVisualStyleBackColor = true;
+            // 
+            // textBoxContainerName
+            // 
+            this.textBoxContainerName.Location = new System.Drawing.Point(12, 243);
+            this.textBoxContainerName.Name = "textBoxContainerName";
+            this.textBoxContainerName.Size = new System.Drawing.Size(151, 20);
+            this.textBoxContainerName.TabIndex = 12;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 224);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(83, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Container Name";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(673, 535);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBoxContainerName);
+            this.Controls.Add(this.buttonUploadFile);
+            this.Controls.Add(this.buttonNewContainer);
+            this.Controls.Add(this.listBoxBlobs);
+            this.Controls.Add(this.listBoxContainers);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
@@ -159,6 +248,15 @@
         private System.Windows.Forms.ToolStripMenuItem manageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem analyzeFormToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageModelsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem azureStorageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewBlobContainersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createNewContainerToolStripMenuItem;
+        private System.Windows.Forms.ListBox listBoxContainers;
+        private System.Windows.Forms.ListBox listBoxBlobs;
+        private System.Windows.Forms.Button buttonNewContainer;
+        private System.Windows.Forms.Button buttonUploadFile;
+        private System.Windows.Forms.TextBox textBoxContainerName;
+        private System.Windows.Forms.Label label1;
     }
 }
 

@@ -12,6 +12,8 @@ using Azure;
 using Azure.AI.FormRecognizer;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Training;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 
 
 namespace compx374winform
@@ -25,6 +27,7 @@ namespace compx374winform
         private static string trainingDataUrl = "https://jonathaneddy374.blob.core.windows.net/universityapplication1?sp=rwdl&st=2021-09-13T05:29:51Z&se=2021-11-29T12:29:51Z&spr=https&sv=2020-08-04&sr=c&sig=i5h2ct8CjvQB%2FBe%2BvgA0zTGC5VnuH5ZpaarlJSSteHo%3D";
         private static string formUrl = "https://jonathaneddy374.blob.core.windows.net/universityapplication1/IMG_0914.png?sp=rwd&st=2021-09-13T05:34:26Z&se=2021-11-29T12:34:26Z&spr=https&sv=2020-08-04&sr=b&sig=tkk4kC%2BUks%2Fx1haZX2v3GAXj%2FafTbZ%2BgrAzLjQRDl3g%3D";
         private static string modelId = "f8a363a6-dbfa-4d5e-ad34-9edd04105d75";
+        private static string storageAccString = "DefaultEndpointsProtocol=https;AccountName=jonathaneddy374;AccountKey=MtRw600avh4qhcrQqxWL2FSXshnZ2pp4ovcQVkQEvugyxIUhVzJFnNCKf2j7pzk+tWdO9hUmngLw0hllFv4BmQ==;EndpointSuffix=core.windows.net";
 
         private FormRecognizerClient recognizerClient;
         private FormTrainingClient trainingClient;
@@ -35,6 +38,8 @@ namespace compx374winform
 
             recognizerClient = AuthenticateClient();
             trainingClient = AuthenticateTrainingClient();
+
+            Task.WaitAll(LoadContainers());
         }
 
         private static FormRecognizerClient AuthenticateClient()
@@ -78,6 +83,7 @@ namespace compx374winform
                 }
             }
         }
+
 
         private static async Task<String> TrainModel(FormTrainingClient trainingClient, string trainingDataUrl)
         {
@@ -203,6 +209,72 @@ namespace compx374winform
                 }
             }
         }
+        private async Task LoadContainers()
+        {
+            BlobServiceClient blobServiceClient = new BlobServiceClient(storageAccString);
+            var segmentSize = 10;
+            var containers = blobServiceClient.GetBlobContainersAsync();
+            listBoxContainers.Items.Clear();
+            try
+            {
+                // Call the listing operation and enumerate the result segment.
+                var resultSegment =
+                    blobServiceClient.GetBlobContainers(BlobContainerTraits.Metadata, null, default)
+                    .AsPages(default, segmentSize);
+                foreach (Azure.Page<BlobContainerItem> containerPage in resultSegment)
+                {
+                    foreach (BlobContainerItem containerItem in containerPage.Values)
+                    {
+                        listBoxContainers.Items.Add(containerItem.Name);
+                        Console.WriteLine("Container name: {0}", containerItem.Name);
+                    }
+
+                    Console.WriteLine();
+                }
+            }
+            catch (RequestFailedException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.ReadLine();
+                throw;
+            }
+        }
+
+        private static async Task<BlobContainerClient> CreateStorageContainer(string name)
+        {
+
+            // Create a BlobServiceClient object which will be used to create a container client
+            BlobServiceClient blobServiceClient = new BlobServiceClient(storageAccString);
+
+            //Create a unique name for the container
+            string containerName = name + Guid.NewGuid().ToString();
+
+            // Create the container and return a container client object
+            return await blobServiceClient.CreateBlobContainerAsync(containerName);
+
+        }
+        private static async Task uploadBlob()
+        {
+
+            //var fileDialog = new OpenFileDialog();
+
+
+            //// var containers = await blobServiceClient.GetBlobContainersAsync();
+
+            //if (fileDialog.ShowDialog() == DialogResult.OK)
+            //{
+            //    var localFilePath = fileDialog.FileName;
+            //    var fileName = fileDialog.SafeFileName;
+
+            //    // Get a reference to a blob
+            //    BlobClient blobClient = containerClient.GetBlobClient(fileName);
+
+            //    Console.WriteLine("Uploading to Blob storage as blob:\n\t {0}\n", blobClient.Uri);
+
+            //    // Upload data from the local file
+            //    await blobClient.UploadAsync(localFilePath, true);
+            //}
+        }
 
         private static async Task ManageModels(FormTrainingClient trainingClient, string trainingFileUrl)
         {
@@ -297,6 +369,17 @@ namespace compx374winform
         {
             var manageModels = ManageModels(trainingClient, trainingDataUrl);
             //Task.WaitAll(manageModels);
+        }
+
+        private async void CreateNewContainerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            await CreateStorageContainer("testname");
+        }
+
+        private async void ButtonNewContainer_Click(object sender, EventArgs e)
+        {
+            var name = textBoxContainerName.Text;
+            await CreateStorageContainer(name);
         }
     }
 }
