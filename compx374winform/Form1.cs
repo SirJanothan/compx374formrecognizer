@@ -204,6 +204,27 @@ namespace compx374winform
             }
         }
 
+        //Does the same thing as AnlyzePdfForm but also outputs json files
+        //Pdfs are retrieved from 
+        private static async Task AnalyzePdfForm_andOutput(FormRecognizerClient recognizerClient, String modelId, string formUrl)
+        {
+            RecognizedFormCollection forms = await recognizerClient
+            .StartRecognizeCustomFormsFromUri(modelId, new Uri(formUrl))
+            .WaitForCompletionAsync();
+
+            FormInputOutput.saveForms(forms);
+        }
+
+        //Overloading method for taking in files from local source
+        private static async Task AnalyzePdfForm_andOutput(FormRecognizerClient recognizerClient, String modelId, FileStream filestream)
+        {
+            RecognizedFormCollection forms = await recognizerClient
+            .StartRecognizeCustomForms(modelId, filestream)
+            .WaitForCompletionAsync();
+
+            FormInputOutput.saveForms(forms);
+        }
+
         private static async Task ManageModels(FormTrainingClient trainingClient, string trainingFileUrl)
         {
             // Check number of models in the FormRecognizer account, 
