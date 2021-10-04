@@ -84,14 +84,14 @@
             // folderToolStripMenuItem
             // 
             this.folderToolStripMenuItem.Name = "folderToolStripMenuItem";
-            this.folderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.folderToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.folderToolStripMenuItem.Text = "Folder";
             this.folderToolStripMenuItem.Click += new System.EventHandler(this.FolderToolStripMenuItem_Click);
             // 
             // formToolStripMenuItem
             // 
             this.formToolStripMenuItem.Name = "formToolStripMenuItem";
-            this.formToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.formToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.formToolStripMenuItem.Text = "Form";
             this.formToolStripMenuItem.Click += new System.EventHandler(this.FormToolStripMenuItem_Click);
             // 
@@ -108,21 +108,21 @@
             // modelToolStripMenuItem
             // 
             this.modelToolStripMenuItem.Name = "modelToolStripMenuItem";
-            this.modelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modelToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.modelToolStripMenuItem.Text = "Model";
             this.modelToolStripMenuItem.Click += new System.EventHandler(this.ModelToolStripMenuItem_Click);
             // 
             // modelWithLabelsToolStripMenuItem
             // 
             this.modelWithLabelsToolStripMenuItem.Name = "modelWithLabelsToolStripMenuItem";
-            this.modelWithLabelsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modelWithLabelsToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.modelWithLabelsToolStripMenuItem.Text = "Model With Labels";
             this.modelWithLabelsToolStripMenuItem.Click += new System.EventHandler(this.ModelWithLabelsToolStripMenuItem_Click);
             // 
             // recogniseContentToolStripMenuItem
             // 
             this.recogniseContentToolStripMenuItem.Name = "recogniseContentToolStripMenuItem";
-            this.recogniseContentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.recogniseContentToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.recogniseContentToolStripMenuItem.Text = "Recognise Content";
             this.recogniseContentToolStripMenuItem.Click += new System.EventHandler(this.RecogniseContentToolStripMenuItem_Click);
             // 
@@ -138,14 +138,14 @@
             // analyzeFormToolStripMenuItem
             // 
             this.analyzeFormToolStripMenuItem.Name = "analyzeFormToolStripMenuItem";
-            this.analyzeFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.analyzeFormToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.analyzeFormToolStripMenuItem.Text = "Analyze Form";
             this.analyzeFormToolStripMenuItem.Click += new System.EventHandler(this.AnalyzeFormToolStripMenuItem_Click);
             // 
             // manageModelsToolStripMenuItem
             // 
             this.manageModelsToolStripMenuItem.Name = "manageModelsToolStripMenuItem";
-            this.manageModelsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.manageModelsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.manageModelsToolStripMenuItem.Text = "Manage Models";
             this.manageModelsToolStripMenuItem.Click += new System.EventHandler(this.ManageModelsToolStripMenuItem_Click);
             // 
@@ -174,7 +174,7 @@
             // listBoxContainers
             // 
             this.listBoxContainers.FormattingEnabled = true;
-            this.listBoxContainers.Location = new System.Drawing.Point(12, 69);
+            this.listBoxContainers.Location = new System.Drawing.Point(169, 66);
             this.listBoxContainers.Name = "listBoxContainers";
             this.listBoxContainers.Size = new System.Drawing.Size(152, 95);
             this.listBoxContainers.TabIndex = 8;
@@ -183,14 +183,14 @@
             // listBoxBlobs
             // 
             this.listBoxBlobs.FormattingEnabled = true;
-            this.listBoxBlobs.Location = new System.Drawing.Point(170, 69);
+            this.listBoxBlobs.Location = new System.Drawing.Point(12, 69);
             this.listBoxBlobs.Name = "listBoxBlobs";
             this.listBoxBlobs.Size = new System.Drawing.Size(151, 95);
             this.listBoxBlobs.TabIndex = 9;
             // 
             // buttonNewContainer
             // 
-            this.buttonNewContainer.Location = new System.Drawing.Point(12, 269);
+            this.buttonNewContainer.Location = new System.Drawing.Point(143, 257);
             this.buttonNewContainer.Name = "buttonNewContainer";
             this.buttonNewContainer.Size = new System.Drawing.Size(151, 23);
             this.buttonNewContainer.TabIndex = 10;
@@ -201,7 +201,7 @@
             // buttonUploadFile
             // 
             this.buttonUploadFile.Enabled = false;
-            this.buttonUploadFile.Location = new System.Drawing.Point(170, 171);
+            this.buttonUploadFile.Location = new System.Drawing.Point(12, 170);
             this.buttonUploadFile.Name = "buttonUploadFile";
             this.buttonUploadFile.Size = new System.Drawing.Size(151, 23);
             this.buttonUploadFile.TabIndex = 11;
@@ -211,7 +211,7 @@
             // 
             // textBoxContainerName
             // 
-            this.textBoxContainerName.Location = new System.Drawing.Point(12, 243);
+            this.textBoxContainerName.Location = new System.Drawing.Point(143, 231);
             this.textBoxContainerName.Name = "textBoxContainerName";
             this.textBoxContainerName.Size = new System.Drawing.Size(151, 20);
             this.textBoxContainerName.TabIndex = 12;
@@ -219,7 +219,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 224);
+            this.label1.Location = new System.Drawing.Point(140, 215);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(83, 13);
             this.label1.TabIndex = 13;
@@ -228,7 +228,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 50);
+            this.label2.Location = new System.Drawing.Point(170, 50);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(124, 13);
             this.label2.TabIndex = 14;
@@ -237,7 +237,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(170, 49);
+            this.label3.Location = new System.Drawing.Point(13, 48);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 13);
             this.label3.TabIndex = 15;
@@ -256,9 +256,9 @@
             // buttonNewModel
             // 
             this.buttonNewModel.Enabled = false;
-            this.buttonNewModel.Location = new System.Drawing.Point(499, 252);
+            this.buttonNewModel.Location = new System.Drawing.Point(327, 66);
             this.buttonNewModel.Name = "buttonNewModel";
-            this.buttonNewModel.Size = new System.Drawing.Size(193, 23);
+            this.buttonNewModel.Size = new System.Drawing.Size(150, 62);
             this.buttonNewModel.TabIndex = 17;
             this.buttonNewModel.Text = "Train New Model";
             this.buttonNewModel.UseVisualStyleBackColor = true;
