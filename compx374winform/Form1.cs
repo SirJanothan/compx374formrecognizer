@@ -40,7 +40,8 @@ namespace compx374winform
             recognizerClient = AuthenticateClient();
             trainingClient = AuthenticateTrainingClient();
 
-            Task.WaitAll(LoadContainers());
+            LoadContainers();
+            LoadModels();
         }
 
         private static FormRecognizerClient AuthenticateClient()
@@ -210,7 +211,25 @@ namespace compx374winform
                 }
             }
         }
-        private async Task LoadContainers()
+        private void LoadModels()
+        {
+            AccountProperties accountProperties = trainingClient.GetAccountProperties();
+            Console.WriteLine($"Account has {accountProperties.CustomModelCount} models.");
+            Console.WriteLine($"It can have at most {accountProperties.CustomModelLimit} models.");
+            labelModelCount.Text = $"{accountProperties.CustomModelCount}/{accountProperties.CustomModelLimit}";
+            Pageable<CustomFormModelInfo> models = trainingClient.GetCustomModels();
+            listBoxModels.Items.Clear();
+            foreach (CustomFormModelInfo modelInfo in models)
+            {
+                listBoxModels.Items.Add(modelInfo.ModelId.PadRight(40) + modelInfo.TrainingStartedOn);
+                Console.WriteLine($"Custom Model Info:");
+                Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
+                Console.WriteLine($"    Model Status: {modelInfo.Status}");
+                Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
+                Console.WriteLine($"    Training model completed on: {modelInfo.TrainingCompletedOn}");
+            }
+        }
+        private void LoadContainers()
         {
             BlobServiceClient blobServiceClient = new BlobServiceClient(storageAccString);
             var segmentSize = 10;
@@ -412,10 +431,10 @@ namespace compx374winform
             if (listBoxContainers.SelectedIndex != -1)
             {
                 buttonUploadFile.Enabled = true;
+                selectedContainerClient = new BlobContainerClient(storageAccString, listBoxContainers.SelectedItem.ToString());
+                await ListBlobsFlatListing(selectedContainerClient);
             }
 
-            selectedContainerClient = new BlobContainerClient(storageAccString, listBoxContainers.SelectedItem.ToString());
-            await ListBlobsFlatListing(selectedContainerClient);
         }
         private async Task ListBlobsFlatListing(BlobContainerClient blobContainerClient)
         {
@@ -445,6 +464,34 @@ namespace compx374winform
         private async void ButtonUploadFile_Click(object sender, EventArgs e)
         {
             await uploadBlob();
+        }
+
+        private async void ButtonAnalyze_Click(object sender, EventArgs e)
+        {
+            var fileDialog = new OpenFileDialog();
+
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                FileStream fs = File.OpenRead(fileDialog.FileName);
+                await AnalyzePdfForm_andOutput(recognizerClient, modelId, fs);
+            }
+        }
+
+        private void ListBoxModels_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBoxModels.SelectedIndex != -1)
+            {
+                buttonAnalyze.Enabled = true;
+                buttonDeleteModel.Enabled = true;
+                modelId = listBoxModels.SelectedItem.ToString().Split(' ')[0];
+                Console.WriteLine(modelId);
+            }
+        }
+
+        private async void ButtonDeleteModel_Click(object sender, EventArgs e)
+        {
+            await trainingClient.DeleteModelAsync(modelId = listBoxModels.SelectedItem.ToString().Split(' ')[0]);
+            LoadModels();
         }
     }
 }

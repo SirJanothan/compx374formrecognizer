@@ -48,6 +48,14 @@
             this.buttonUploadFile = new System.Windows.Forms.Button();
             this.textBoxContainerName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.listBoxModels = new System.Windows.Forms.ListBox();
+            this.buttonNewModel = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.buttonAnalyze = new System.Windows.Forms.Button();
+            this.labelModelCount = new System.Windows.Forms.Label();
+            this.buttonDeleteModel = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +68,7 @@
             this.azureStorageToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1200, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1329, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -76,14 +84,14 @@
             // folderToolStripMenuItem
             // 
             this.folderToolStripMenuItem.Name = "folderToolStripMenuItem";
-            this.folderToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.folderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.folderToolStripMenuItem.Text = "Folder";
             this.folderToolStripMenuItem.Click += new System.EventHandler(this.FolderToolStripMenuItem_Click);
             // 
             // formToolStripMenuItem
             // 
             this.formToolStripMenuItem.Name = "formToolStripMenuItem";
-            this.formToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.formToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.formToolStripMenuItem.Text = "Form";
             this.formToolStripMenuItem.Click += new System.EventHandler(this.FormToolStripMenuItem_Click);
             // 
@@ -100,21 +108,21 @@
             // modelToolStripMenuItem
             // 
             this.modelToolStripMenuItem.Name = "modelToolStripMenuItem";
-            this.modelToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.modelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.modelToolStripMenuItem.Text = "Model";
             this.modelToolStripMenuItem.Click += new System.EventHandler(this.ModelToolStripMenuItem_Click);
             // 
             // modelWithLabelsToolStripMenuItem
             // 
             this.modelWithLabelsToolStripMenuItem.Name = "modelWithLabelsToolStripMenuItem";
-            this.modelWithLabelsToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.modelWithLabelsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.modelWithLabelsToolStripMenuItem.Text = "Model With Labels";
             this.modelWithLabelsToolStripMenuItem.Click += new System.EventHandler(this.ModelWithLabelsToolStripMenuItem_Click);
             // 
             // recogniseContentToolStripMenuItem
             // 
             this.recogniseContentToolStripMenuItem.Name = "recogniseContentToolStripMenuItem";
-            this.recogniseContentToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.recogniseContentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.recogniseContentToolStripMenuItem.Text = "Recognise Content";
             this.recogniseContentToolStripMenuItem.Click += new System.EventHandler(this.RecogniseContentToolStripMenuItem_Click);
             // 
@@ -130,14 +138,14 @@
             // analyzeFormToolStripMenuItem
             // 
             this.analyzeFormToolStripMenuItem.Name = "analyzeFormToolStripMenuItem";
-            this.analyzeFormToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.analyzeFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.analyzeFormToolStripMenuItem.Text = "Analyze Form";
             this.analyzeFormToolStripMenuItem.Click += new System.EventHandler(this.AnalyzeFormToolStripMenuItem_Click);
             // 
             // manageModelsToolStripMenuItem
             // 
             this.manageModelsToolStripMenuItem.Name = "manageModelsToolStripMenuItem";
-            this.manageModelsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.manageModelsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.manageModelsToolStripMenuItem.Text = "Manage Models";
             this.manageModelsToolStripMenuItem.Click += new System.EventHandler(this.ManageModelsToolStripMenuItem_Click);
             // 
@@ -217,11 +225,96 @@
             this.label1.TabIndex = 13;
             this.label1.Text = "Container Name";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 50);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(124, 13);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Blob Storage Containers:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(170, 49);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(100, 13);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Selected Container:";
+            // 
+            // listBoxModels
+            // 
+            this.listBoxModels.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBoxModels.FormattingEnabled = true;
+            this.listBoxModels.Location = new System.Drawing.Point(499, 69);
+            this.listBoxModels.Name = "listBoxModels";
+            this.listBoxModels.Size = new System.Drawing.Size(502, 147);
+            this.listBoxModels.TabIndex = 16;
+            this.listBoxModels.SelectedIndexChanged += new System.EventHandler(this.ListBoxModels_SelectedIndexChanged);
+            // 
+            // buttonNewModel
+            // 
+            this.buttonNewModel.Enabled = false;
+            this.buttonNewModel.Location = new System.Drawing.Point(499, 252);
+            this.buttonNewModel.Name = "buttonNewModel";
+            this.buttonNewModel.Size = new System.Drawing.Size(193, 23);
+            this.buttonNewModel.TabIndex = 17;
+            this.buttonNewModel.Text = "Train New Model";
+            this.buttonNewModel.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(499, 48);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(127, 13);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "Form Recogniser Models:";
+            // 
+            // buttonAnalyze
+            // 
+            this.buttonAnalyze.Enabled = false;
+            this.buttonAnalyze.Location = new System.Drawing.Point(1007, 69);
+            this.buttonAnalyze.Name = "buttonAnalyze";
+            this.buttonAnalyze.Size = new System.Drawing.Size(169, 47);
+            this.buttonAnalyze.TabIndex = 19;
+            this.buttonAnalyze.Text = "Analyze Forms Using Selected Model";
+            this.buttonAnalyze.UseVisualStyleBackColor = true;
+            this.buttonAnalyze.Click += new System.EventHandler(this.ButtonAnalyze_Click);
+            // 
+            // labelModelCount
+            // 
+            this.labelModelCount.AutoSize = true;
+            this.labelModelCount.Location = new System.Drawing.Point(657, 50);
+            this.labelModelCount.Name = "labelModelCount";
+            this.labelModelCount.Size = new System.Drawing.Size(0, 13);
+            this.labelModelCount.TabIndex = 20;
+            // 
+            // buttonDeleteModel
+            // 
+            this.buttonDeleteModel.Enabled = false;
+            this.buttonDeleteModel.Location = new System.Drawing.Point(499, 222);
+            this.buttonDeleteModel.Name = "buttonDeleteModel";
+            this.buttonDeleteModel.Size = new System.Drawing.Size(232, 23);
+            this.buttonDeleteModel.TabIndex = 21;
+            this.buttonDeleteModel.Text = "Delete Selected Model";
+            this.buttonDeleteModel.UseVisualStyleBackColor = true;
+            this.buttonDeleteModel.Click += new System.EventHandler(this.ButtonDeleteModel_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 550);
+            this.ClientSize = new System.Drawing.Size(1329, 611);
+            this.Controls.Add(this.buttonDeleteModel);
+            this.Controls.Add(this.labelModelCount);
+            this.Controls.Add(this.buttonAnalyze);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.buttonNewModel);
+            this.Controls.Add(this.listBoxModels);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxContainerName);
             this.Controls.Add(this.buttonUploadFile);
@@ -260,6 +353,14 @@
         private System.Windows.Forms.Button buttonUploadFile;
         private System.Windows.Forms.TextBox textBoxContainerName;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ListBox listBoxModels;
+        private System.Windows.Forms.Button buttonNewModel;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button buttonAnalyze;
+        private System.Windows.Forms.Label labelModelCount;
+        private System.Windows.Forms.Button buttonDeleteModel;
     }
 }
 
