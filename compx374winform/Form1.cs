@@ -31,6 +31,7 @@ namespace compx374winform
 
         private FormRecognizerClient recognizerClient;
         private FormTrainingClient trainingClient;
+        private BlobContainerClient selectedContainerClient;
 
         public Form1()
         {
@@ -253,27 +254,30 @@ namespace compx374winform
             return await blobServiceClient.CreateBlobContainerAsync(containerName);
 
         }
-        private static async Task uploadBlob()
+        private async Task uploadBlob()
         {
+            if (selectedContainerClient != null)
+            {
+                var fileDialog = new OpenFileDialog();
 
-            //var fileDialog = new OpenFileDialog();
 
+                // var containers = await blobServiceClient.GetBlobContainersAsync();
 
-            //// var containers = await blobServiceClient.GetBlobContainersAsync();
+                if (fileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var localFilePath = fileDialog.FileName;
+                    var fileName = fileDialog.SafeFileName;
 
-            //if (fileDialog.ShowDialog() == DialogResult.OK)
-            //{
-            //    var localFilePath = fileDialog.FileName;
-            //    var fileName = fileDialog.SafeFileName;
+                    // Get a reference to a blob
+                    BlobClient blobClient = selectedContainerClient.GetBlobClient(fileName);
 
-            //    // Get a reference to a blob
-            //    BlobClient blobClient = containerClient.GetBlobClient(fileName);
+                    Console.WriteLine("Uploading to Blob storage as blob:\n\t {0}\n", blobClient.Uri);
 
-            //    Console.WriteLine("Uploading to Blob storage as blob:\n\t {0}\n", blobClient.Uri);
-
-            //    // Upload data from the local file
-            //    await blobClient.UploadAsync(localFilePath, true);
-            //}
+                    // Upload data from the local file
+                    await blobClient.UploadAsync(localFilePath, true);
+                }
+            }
+            
         }
 
         //Does the same thing as AnlyzePdfForm but also outputs json files
@@ -401,6 +405,46 @@ namespace compx374winform
         {
             var name = textBoxContainerName.Text;
             await CreateStorageContainer(name);
+        }
+
+        private async void ListBoxContainers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBoxContainers.SelectedIndex != -1)
+            {
+                buttonUploadFile.Enabled = true;
+            }
+
+            selectedContainerClient = new BlobContainerClient(storageAccString, listBoxContainers.SelectedItem.ToString());
+            await ListBlobsFlatListing(selectedContainerClient);
+        }
+        private async Task ListBlobsFlatListing(BlobContainerClient blobContainerClient)
+        {
+            try
+            {
+                // Call the listing operation and return pages of the specified size.
+                var resultSegment = blobContainerClient.GetBlobs()
+                    .AsPages(default);
+                listBoxBlobs.Items.Clear();
+                // Enumerate the blobs returned for each page.
+                foreach (Azure.Page<BlobItem> blobPage in resultSegment)
+                {
+                    foreach (BlobItem blobItem in blobPage.Values)
+                    {
+                        listBoxBlobs.Items.Add(blobItem.Name);
+                    }
+                }
+            }
+            catch (RequestFailedException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.ReadLine();
+                throw;
+            }
+        }
+
+        private async void ButtonUploadFile_Click(object sender, EventArgs e)
+        {
+            await uploadBlob();
         }
     }
 }
