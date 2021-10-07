@@ -12,14 +12,30 @@ namespace compx374winform
 {
     public partial class Form2 : Form
     {
-        public Form2()
+        Form1 mainForm;
+        public Form2(Form1 mainForm)
         {
+            this.mainForm = mainForm;
             InitializeComponent();
+            textBoxStorageAccString.Text = Properties.Settings.Default["storageAccString"].ToString();
+            textBoxSubKey.Text = Properties.Settings.Default["subscriptionKey"].ToString();
+            textBoxRecogniserEndpoint.Text = Properties.Settings.Default["recogniserEndpoint"].ToString();
         }
 
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ButtonSave_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default["storageAccString"] = textBoxStorageAccString.Text;
+            Properties.Settings.Default["subscriptionKey"] = textBoxSubKey.Text;
+            Properties.Settings.Default["recogniserEndpoint"] = textBoxRecogniserEndpoint.Text;
+            Properties.Settings.Default.Save();
+            mainForm.loadSettings();
+            mainForm.apiKeysForm = null;
+            Close();
         }
     }
 }

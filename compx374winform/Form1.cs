@@ -20,16 +20,17 @@ namespace compx374winform
 {
     public partial class Form1 : Form
     {
-        // These need to be removed from the code
-        private static readonly string endpoint = "https://jonathan-eddy-form-recognizer.cognitiveservices.azure.com/";
-        private static readonly string apiKey = "0a4823585ca04c5d991705bc318679b4";
-        private static readonly AzureKeyCredential credential = new AzureKeyCredential(apiKey);
+        // recogniserEndpoint = "https://jonathan-eddy-form-recognizer.cognitiveservices.azure.com/";
+        // subscriptionKey = "0a4823585ca04c5d991705bc318679b4";
+        // storageAccString = "DefaultEndpointsProtocol=https;AccountName=jonathaneddy374;AccountKey=MtRw600avh4qhcrQqxWL2FSXshnZ2pp4ovcQVkQEvugyxIUhVzJFnNCKf2j7pzk+tWdO9hUmngLw0hllFv4BmQ==;EndpointSuffix=core.windows.net";
+        
+        private static string recogniserEndpoint;
+        private static string subscriptionKey;
+        private static string storageAccString;
 
-        private static string trainingDataUrl = "https://jonathaneddy374.blob.core.windows.net/universityapplication1?sp=rwdl&st=2021-09-13T05:29:51Z&se=2021-11-29T12:29:51Z&spr=https&sv=2020-08-04&sr=c&sig=i5h2ct8CjvQB%2FBe%2BvgA0zTGC5VnuH5ZpaarlJSSteHo%3D";
-        private static string formUrl = "https://jonathaneddy374.blob.core.windows.net/universityapplication1/IMG_0914.png?sp=rwd&st=2021-09-13T05:34:26Z&se=2021-11-29T12:34:26Z&spr=https&sv=2020-08-04&sr=b&sig=tkk4kC%2BUks%2Fx1haZX2v3GAXj%2FafTbZ%2BgrAzLjQRDl3g%3D";
         private static string modelId = "f8a363a6-dbfa-4d5e-ad34-9edd04105d75";
-        private static string storageAccString = "DefaultEndpointsProtocol=https;AccountName=jonathaneddy374;AccountKey=MtRw600avh4qhcrQqxWL2FSXshnZ2pp4ovcQVkQEvugyxIUhVzJFnNCKf2j7pzk+tWdO9hUmngLw0hllFv4BmQ==;EndpointSuffix=core.windows.net";
 
+        public Form2 apiKeysForm;
 
         private FormRecognizerClient recognizerClient;
         private FormTrainingClient trainingClient;
@@ -39,6 +40,9 @@ namespace compx374winform
         {
             InitializeComponent();
 
+
+            loadSettings();
+
             recognizerClient = AuthenticateClient();
             trainingClient = AuthenticateTrainingClient();
 
@@ -46,17 +50,24 @@ namespace compx374winform
             LoadModels();
         }
 
+        public void loadSettings()
+        {
+            recogniserEndpoint = Properties.Settings.Default["recogniserEndpoint"].ToString(); ;
+            subscriptionKey = Properties.Settings.Default["subscriptionKey"].ToString(); ;
+            storageAccString = Properties.Settings.Default["storageAccString"].ToString(); ;
+        }
+
         private static FormRecognizerClient AuthenticateClient()
         {
-            var credential = new AzureKeyCredential(apiKey);
-            var client = new FormRecognizerClient(new Uri(endpoint), credential);
+            var credential = new AzureKeyCredential(subscriptionKey);
+            var client = new FormRecognizerClient(new Uri(recogniserEndpoint), credential);
             return client;
         }
 
         static private FormTrainingClient AuthenticateTrainingClient()
         {
-            var credential = new AzureKeyCredential(apiKey);
-            var client = new FormTrainingClient(new Uri(endpoint), credential);
+            var credential = new AzureKeyCredential(subscriptionKey);
+            var client = new FormTrainingClient(new Uri(recogniserEndpoint), credential);
             return client;
         }
 
@@ -372,8 +383,14 @@ namespace compx374winform
 
         private void ApiKeysToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form2 apiKeysForm = new Form2();
-            apiKeysForm.Show();
+            if (apiKeysForm == null)
+            {
+                apiKeysForm = new Form2(this);
+                apiKeysForm.Show();
+            } else
+            {
+                apiKeysForm.Focus();
+            }
         }
     }
 }
