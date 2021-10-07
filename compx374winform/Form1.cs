@@ -43,6 +43,13 @@ namespace compx374winform
 
             loadSettings();
 
+            if (recogniserEndpoint == null || recogniserEndpoint == "" || subscriptionKey == null || subscriptionKey == "")
+            {
+                MessageBox.Show("Please set the azure subscription key and recogniser endpoint");
+
+                openApiKeys();
+                return;
+            }
             recognizerClient = AuthenticateClient();
             trainingClient = AuthenticateTrainingClient();
 
@@ -217,6 +224,12 @@ namespace compx374winform
         }
         private void LoadContainers()
         {
+            Console.WriteLine(storageAccString);
+            if (storageAccString == null || storageAccString == "")
+            {
+                MessageBox.Show("Set the storage account string in the api keys window");
+                return;
+            }
             BlobServiceClient blobServiceClient = new BlobServiceClient(storageAccString);
             var segmentSize = 10;
             var containers = blobServiceClient.GetBlobContainersAsync();
@@ -383,11 +396,17 @@ namespace compx374winform
 
         private void ApiKeysToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            openApiKeys();
+        }
+        private void openApiKeys()
+        {
+
             if (apiKeysForm == null)
             {
                 apiKeysForm = new Form2(this);
                 apiKeysForm.Show();
-            } else
+            }
+            else
             {
                 apiKeysForm.Focus();
             }
