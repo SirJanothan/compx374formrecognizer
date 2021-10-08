@@ -22,6 +22,8 @@ namespace compx374winform
         //takes in all the forms in a form collection (when Analyzing Forms) and outputs serialized json files for all the forms
         public static void saveForms(RecognizedFormCollection forms)
         {
+            Console.WriteLine("Is save forms even running?");
+
             try
             {
                 // Try to create the directory.
@@ -31,6 +33,7 @@ namespace compx374winform
                 foreach(RecognizedForm form in forms)
                 {
                     String filePath = sub_di.FullName + form.GetHashCode() + ".json";
+                    Console.WriteLine(filePath);
                     serializeFormData(form,filePath);
                 }
             }

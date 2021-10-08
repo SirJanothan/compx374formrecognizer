@@ -208,9 +208,13 @@ namespace compx374winform
         //Pdfs are retrieved from 
         private static async Task AnalyzePdfForm_andOutput(FormRecognizerClient recognizerClient, String modelId, string formUrl)
         {
+            Console.WriteLine("AnalyzePdfForm_andOutput is running");
+
             RecognizedFormCollection forms = await recognizerClient
             .StartRecognizeCustomFormsFromUri(modelId, new Uri(formUrl))
             .WaitForCompletionAsync();
+
+            //will need to look into this but I'm not sure this top bit is doing anything atm
 
             FormInputOutput.saveForms(forms);
         }
@@ -311,7 +315,8 @@ namespace compx374winform
         private void AnalyzeFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var analyzeForm = AnalyzePdfForm(recognizerClient, modelId, formUrl);
-            //Task.WaitAll(analyzeForm);
+            //var analyzeForm = AnalyzePdfForm_andOutput(recognizerClient, modelId, formUrl);
+            Task.WaitAll(analyzeForm);
         }
 
         private void ManageModelsToolStripMenuItem_Click(object sender, EventArgs e)
