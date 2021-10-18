@@ -296,9 +296,10 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labelModelCount);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Form Analyser";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabPageContainer.ResumeLayout(false);
