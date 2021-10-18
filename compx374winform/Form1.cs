@@ -368,12 +368,47 @@ namespace compx374winform
 
         private async void ButtonAnalyze_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var fileDialog = new OpenFileDialog();
+                fileDialog.Multiselect = true;
+                fileDialog.Filter = "Compatable Image Files(*.PDF;*.JPG;*.PNG)|*.PDF;*.JPG;*.PNG|PDF Files(*.PDF)|*.PDF|JPEG Files(*.JPG)|*.JPG|PNG Files(*.PNG)|*.PNG";
+                if (fileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Asyncronously analyze the selected forms
+                    List<Task> tasks = new List<Task>();
+                    foreach (string file in fileDialog.FileNames)
+                    {
+                        Console.WriteLine("Processing " + file);
+                        using (FileStream fs = File.OpenRead(file))
+                        {
+                            tasks.Add(AnalyzePdfForm_andOutput(recognizerClient, modelId, fs));
+                        }
+                    }
+                    await Task.WhenAll(tasks);
+                }
+            } catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private async void selectLocalFiles()
+        {
+
             var fileDialog = new OpenFileDialog();
+            fileDialog.Multiselect = true;
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                FileStream fs = File.OpenRead(fileDialog.FileName);
-                await AnalyzePdfForm_andOutput(recognizerClient, modelId, fs);
+                foreach (string file in fileDialog.FileNames)
+                {
+                    using (FileStream fs = File.OpenRead(file))
+                    {
+                        await AnalyzePdfForm_andOutput(recognizerClient, modelId, fs);
+                    }
+                }
+
             }
         }
 

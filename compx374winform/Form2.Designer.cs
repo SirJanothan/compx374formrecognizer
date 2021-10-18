@@ -129,6 +129,7 @@
             this.Controls.Add(this.textBoxStorageAccString);
             this.Name = "Form2";
             this.Text = "Azure API Keys";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form2_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -34,8 +34,12 @@ namespace compx374winform
             Properties.Settings.Default["recogniserEndpoint"] = textBoxRecogniserEndpoint.Text;
             Properties.Settings.Default.Save();
             mainForm.loadSettings();
-            mainForm.apiKeysForm = null;
             Close();
+        }
+
+        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            mainForm.apiKeysForm = null;
         }
     }
 }
