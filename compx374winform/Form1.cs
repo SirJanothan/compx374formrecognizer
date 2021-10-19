@@ -20,10 +20,6 @@ namespace compx374winform
 {
     public partial class Form1 : Form
     {
-        // recogniserEndpoint = "https://jonathan-eddy-form-recognizer.cognitiveservices.azure.com/";
-        // subscriptionKey = "0a4823585ca04c5d991705bc318679b4";
-        // storageAccString = "DefaultEndpointsProtocol=https;AccountName=jonathaneddy374;AccountKey=MtRw600avh4qhcrQqxWL2FSXshnZ2pp4ovcQVkQEvugyxIUhVzJFnNCKf2j7pzk+tWdO9hUmngLw0hllFv4BmQ==;EndpointSuffix=core.windows.net";
-        
         private static string recogniserEndpoint;
         private static string subscriptionKey;
         private static string storageAccString;
@@ -368,12 +364,47 @@ namespace compx374winform
 
         private async void ButtonAnalyze_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var fileDialog = new OpenFileDialog();
+                fileDialog.Multiselect = true;
+                fileDialog.Filter = "Compatable Image Files(*.PDF;*.JPG;*.PNG)|*.PDF;*.JPG;*.PNG|PDF Files(*.PDF)|*.PDF|JPEG Files(*.JPG)|*.JPG|PNG Files(*.PNG)|*.PNG";
+                if (fileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Asyncronously analyze the selected forms
+                    List<Task> tasks = new List<Task>();
+                    foreach (string file in fileDialog.FileNames)
+                    {
+                        Console.WriteLine("Processing " + file);
+                        using (FileStream fs = File.OpenRead(file))
+                        {
+                            tasks.Add(AnalyzePdfForm_andOutput(recognizerClient, modelId, fs));
+                        }
+                    }
+                    await Task.WhenAll(tasks);
+                }
+            } catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private async void selectLocalFiles()
+        {
+
             var fileDialog = new OpenFileDialog();
+            fileDialog.Multiselect = true;
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                FileStream fs = File.OpenRead(fileDialog.FileName);
-                await AnalyzePdfForm_andOutput(recognizerClient, modelId, fs);
+                foreach (string file in fileDialog.FileNames)
+                {
+                    using (FileStream fs = File.OpenRead(file))
+                    {
+                        await AnalyzePdfForm_andOutput(recognizerClient, modelId, fs);
+                    }
+                }
+
             }
         }
 
@@ -390,8 +421,12 @@ namespace compx374winform
 
         private async void ButtonDeleteModel_Click(object sender, EventArgs e)
         {
-            await trainingClient.DeleteModelAsync(modelId = listBoxModels.SelectedItem.ToString().Split(' ')[0]);
-            LoadModels();
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this model?", "Warning", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                await trainingClient.DeleteModelAsync(modelId = listBoxModels.SelectedItem.ToString().Split(' ')[0]);
+                LoadModels();
+            }
         }
 
         private void ApiKeysToolStripMenuItem_Click(object sender, EventArgs e)
@@ -410,6 +445,11 @@ namespace compx374winform
             {
                 apiKeysForm.Focus();
             }
+        }
+
+        private void ButtonNewModel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
