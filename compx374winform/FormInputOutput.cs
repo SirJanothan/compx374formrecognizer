@@ -22,7 +22,7 @@ namespace compx374winform
         //takes in all the forms in a form collection (when Analyzing Forms) and outputs serialized json files for all the forms
         public static void saveForms(RecognizedFormCollection forms)
         {
-            Console.WriteLine("Is save forms even running?");
+            //Console.WriteLine("Is save forms even running?");
 
             try
             {
@@ -63,7 +63,10 @@ namespace compx374winform
         {
             using (StreamWriter sw = File.CreateText(filePath))
             {
-                string jsonString = JsonSerializer.Serialize(formData);
+                formData.printFieldContents();
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                string jsonString = JsonSerializer.Serialize<LoadedFormData>(formData, options);
+                Console.WriteLine("Json String: " + jsonString);
                 sw.Write(jsonString);
             }
         }
