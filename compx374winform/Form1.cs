@@ -38,6 +38,7 @@ namespace compx374winform
             InitializeComponent();
 
             initialise();
+
         }
         public void initialise()
         {
@@ -475,7 +476,7 @@ namespace compx374winform
             if (apiKeysForm == null)
             {
                 apiKeysForm = new Form2(this);
-                apiKeysForm.Show();
+                apiKeysForm.ShowDialog(this);
             }
             else
             {
@@ -487,5 +488,8 @@ namespace compx374winform
         {
             await TrainModel(trainingClient, selectedContainerClient.Uri.ToString());
         }
+
     }
+
+
 }
