@@ -20,10 +20,7 @@ namespace compx374winform
 {
     public partial class Form1 : Form
     {
-        // recogniserEndpoint = "https://jonathan-eddy-form-recognizer.cognitiveservices.azure.com/";
-        // subscriptionKey = "0a4823585ca04c5d991705bc318679b4";
-        // storageAccString = "DefaultEndpointsProtocol=https;AccountName=jonathaneddy374;AccountKey=MtRw600avh4qhcrQqxWL2FSXshnZ2pp4ovcQVkQEvugyxIUhVzJFnNCKf2j7pzk+tWdO9hUmngLw0hllFv4BmQ==;EndpointSuffix=core.windows.net";
-        
+
         private static string recogniserEndpoint;
         private static string subscriptionKey;
         private static string storageAccString;
@@ -70,16 +67,34 @@ namespace compx374winform
 
         private static FormRecognizerClient AuthenticateClient()
         {
-            var credential = new AzureKeyCredential(subscriptionKey);
-            var client = new FormRecognizerClient(new Uri(recogniserEndpoint), credential);
-            return client;
+            try
+            {
+                var credential = new AzureKeyCredential(subscriptionKey);
+                var client = new FormRecognizerClient(new Uri(recogniserEndpoint), credential);
+                return client;
+            }
+            catch(Exception ex)
+            {
+                new Thread(() => MessageBox.Show("Error while Authenticating client, please check the api subscrition key.")).Start();
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         static private FormTrainingClient AuthenticateTrainingClient()
         {
-            var credential = new AzureKeyCredential(subscriptionKey);
-            var client = new FormTrainingClient(new Uri(recogniserEndpoint), credential);
-            return client;
+            try
+            {
+                var credential = new AzureKeyCredential(subscriptionKey);
+                var client = new FormTrainingClient(new Uri(recogniserEndpoint), credential);
+                return client;
+            }
+            catch (Exception ex)
+            {
+                new Thread(() => MessageBox.Show("Error while Authenticating client, please check the api subscrition key.")).Start();
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
 
