@@ -56,6 +56,7 @@ namespace compx374winform
             this.label7 = new System.Windows.Forms.Label();
             this.labelStorageStringWarning = new System.Windows.Forms.Label();
             this.labelRecogniserDetailsWarning = new System.Windows.Forms.Label();
+            this.labelNonUniqueError = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -142,6 +143,7 @@ namespace compx374winform
             this.textBoxContainerName.Name = "textBoxContainerName";
             this.textBoxContainerName.Size = new System.Drawing.Size(152, 20);
             this.textBoxContainerName.TabIndex = 12;
+            this.textBoxContainerName.TextChanged += new System.EventHandler(this.TextBoxContainerName_TextChanged);
             // 
             // label1
             // 
@@ -288,6 +290,7 @@ namespace compx374winform
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Controls.Add(this.labelNonUniqueError);
             this.tabPage2.Controls.Add(this.labelStorageStringWarning);
             this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.label1);
@@ -351,6 +354,17 @@ namespace compx374winform
             this.labelRecogniserDetailsWarning.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.labelRecogniserDetailsWarning.Visible = false;
             // 
+            // labelNonUniqueError
+            // 
+            this.labelNonUniqueError.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.labelNonUniqueError.Location = new System.Drawing.Point(9, 110);
+            this.labelNonUniqueError.Name = "labelNonUniqueError";
+            this.labelNonUniqueError.Size = new System.Drawing.Size(152, 27);
+            this.labelNonUniqueError.TabIndex = 26;
+            this.labelNonUniqueError.Text = "Containers must have unique names.";
+            this.labelNonUniqueError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelNonUniqueError.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -405,6 +419,7 @@ namespace compx374winform
         private Label label7;
         private Label labelStorageStringWarning;
         private Label labelRecogniserDetailsWarning;
+        private Label labelNonUniqueError;
     }
 }
 

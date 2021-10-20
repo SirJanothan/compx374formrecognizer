@@ -25,7 +25,8 @@ namespace compx374winform
         private static string subscriptionKey;
         private static string storageAccString;
 
-        private static string modelId = "f8a363a6-dbfa-4d5e-ad34-9edd04105d75";
+        // id of the selected custom model
+        private static string modelId;
 
         public Form2 apiKeysForm;
 
@@ -305,40 +306,48 @@ namespace compx374winform
             }
         }
 
-        private static async Task<BlobContainerClient> CreateStorageContainer(string name)
+        private async Task<BlobContainerClient> CreateStorageContainer(string name)
         {
+            try
+            {
+                // Create a BlobServiceClient object which will be used to create a container client
+                BlobServiceClient blobServiceClient = new BlobServiceClient(storageAccString);
 
-            // Create a BlobServiceClient object which will be used to create a container client
-            BlobServiceClient blobServiceClient = new BlobServiceClient(storageAccString);
+                //Create a unique name for the container
+                string containerName = name;
 
-            //Create a unique name for the container
-            string containerName = name + Guid.NewGuid().ToString();
-
-            // Create the container and return a container client object
-            return await blobServiceClient.CreateBlobContainerAsync(containerName);
+                // Create the container and return a container client object
+                return await blobServiceClient.CreateBlobContainerAsync(containerName);
+            } catch(RequestFailedException ex)
+            {
+                labelNonUniqueError.Visible = true;
+                return null;
+            }
 
         }
         private async Task uploadBlob()
         {
             if (selectedContainerClient != null)
             {
+
                 var fileDialog = new OpenFileDialog();
-
-
-                // var containers = await blobServiceClient.GetBlobContainersAsync();
-
+                fileDialog.Multiselect = true;
+                fileDialog.Filter = "Compatable Image Files(*.PDF;*.JPG;*.PNG)|*.PDF;*.JPG;*.PNG|PDF Files(*.PDF)|*.PDF|JPEG Files(*.JPG)|*.JPG|PNG Files(*.PNG)|*.PNG";
                 if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    var localFilePath = fileDialog.FileName;
-                    var fileName = fileDialog.SafeFileName;
+                    // Asyncronously analyze the selected forms
+                    List<Task> tasks = new List<Task>();
+                    for (int i = 0; i < fileDialog.FileNames.Length; i++)
+                    {
 
-                    // Get a reference to a blob
-                    BlobClient blobClient = selectedContainerClient.GetBlobClient(fileName);
+                        var localFilePath = fileDialog.FileNames[i];
+                        var fileName = fileDialog.SafeFileNames[i];
 
-                    Console.WriteLine("Uploading to Blob storage as blob:\n\t {0}\n", blobClient.Uri);
-
-                    // Upload data from the local file
-                    await blobClient.UploadAsync(localFilePath, true);
+                        // Get a reference to a blob
+                        BlobClient blobClient = selectedContainerClient.GetBlobClient(fileName);
+                        tasks.Add(blobClient.UploadAsync(localFilePath, true));
+                    }
+                    await Task.WhenAll(tasks);
                 }
             }
             
@@ -370,6 +379,7 @@ namespace compx374winform
         {
             var name = textBoxContainerName.Text;
             await CreateStorageContainer(name);
+            LoadContainers();
         }
 
         private async void ListBoxContainers_SelectedIndexChanged(object sender, EventArgs e)
@@ -410,6 +420,7 @@ namespace compx374winform
         private async void ButtonUploadFile_Click(object sender, EventArgs e)
         {
             await uploadBlob();
+            await ListBlobsFlatListing(selectedContainerClient);
         }
 
         private async void ButtonAnalyze_Click(object sender, EventArgs e)
@@ -418,7 +429,7 @@ namespace compx374winform
             {
                 var fileDialog = new OpenFileDialog();
                 fileDialog.Multiselect = true;
-                fileDialog.Filter = "Compatable Image Files(*.PDF;*.JPG;*.PNG)|*.PDF;*.JPG;*.PNG|PDF Files(*.PDF)|*.PDF|JPEG Files(*.JPG)|*.JPG|PNG Files(*.PNG)|*.PNG";
+                //fileDialog.Filter = "Compatable Image Files(*.PDF;*.JPG;*.PNG)|*.PDF;*.JPG;*.PNG|PDF Files(*.PDF)|*.PDF|JPEG Files(*.JPG)|*.JPG|PNG Files(*.PNG)|*.PNG";
                 if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
                     // Asyncronously analyze the selected forms
@@ -506,6 +517,17 @@ namespace compx374winform
             await TrainModel(trainingClient, selectedContainerClient.Uri.ToString());
         }
 
+        private void TextBoxContainerName_TextChanged(object sender, EventArgs e)
+        {
+            labelNonUniqueError.Visible = false;
+            if (textBoxContainerName.Text.Length < 1)
+            {
+                buttonNewContainer.Enabled = false;
+            } else
+            {
+                buttonNewContainer.Enabled = true;
+            }
+        }
     }
 
 
