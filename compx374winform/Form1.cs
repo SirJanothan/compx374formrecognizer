@@ -118,9 +118,11 @@ namespace compx374winform
                     //Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
                     //Console.WriteLine($"    Training model completed on: {modelInfo.TrainingCompletedOn}");
                 }
+                labelRecogniserDetailsWarning.Visible = false;
             }
             catch(Exception ex)
             {
+                labelRecogniserDetailsWarning.Visible = true;
                 new Thread(() => MessageBox.Show("Error while loading custom models, please check the form recogniser endpoint in the api keys window.")).Start();
                 Console.WriteLine(ex.Message);
             }
@@ -163,9 +165,16 @@ namespace compx374winform
                     Console.ReadLine();
                     throw;
                 }
+                // enable the new container button and hide the error message
+                buttonNewContainer.Enabled = true;
+                labelStorageStringWarning.Visible = false;
             }
             catch(Exception ex)
             {
+
+                // disable the new container button and show the error message
+                buttonNewContainer.Enabled = false;
+                labelStorageStringWarning.Visible = true;
                 new Thread(() => MessageBox.Show("Error while loading blob storage, please check the storage account string in the api keys window.")).Start();
                 Console.WriteLine(ex.ToString());
             }

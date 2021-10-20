@@ -54,6 +54,8 @@ namespace compx374winform
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.labelStorageStringWarning = new System.Windows.Forms.Label();
+            this.labelRecogniserDetailsWarning = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -259,6 +261,7 @@ namespace compx374winform
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.labelRecogniserDetailsWarning);
             this.tabPage1.Controls.Add(this.buttonAnalyze);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.buttonNewModel);
@@ -285,6 +288,7 @@ namespace compx374winform
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Controls.Add(this.labelStorageStringWarning);
             this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.listBoxContainers);
@@ -322,6 +326,30 @@ namespace compx374winform
             this.label7.Size = new System.Drawing.Size(710, 24);
             this.label7.TabIndex = 24;
             this.label7.Text = "______________________________________________________________________";
+            // 
+            // labelStorageStringWarning
+            // 
+            this.labelStorageStringWarning.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.labelStorageStringWarning.Location = new System.Drawing.Point(205, 9);
+            this.labelStorageStringWarning.Name = "labelStorageStringWarning";
+            this.labelStorageStringWarning.Size = new System.Drawing.Size(509, 18);
+            this.labelStorageStringWarning.TabIndex = 25;
+            this.labelStorageStringWarning.Text = "Missing or incorrect storage account string. Enter your storage string in the api" +
+    " keys window.";
+            this.labelStorageStringWarning.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelStorageStringWarning.Visible = false;
+            // 
+            // labelRecogniserDetailsWarning
+            // 
+            this.labelRecogniserDetailsWarning.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.labelRecogniserDetailsWarning.Location = new System.Drawing.Point(232, 6);
+            this.labelRecogniserDetailsWarning.Name = "labelRecogniserDetailsWarning";
+            this.labelRecogniserDetailsWarning.Size = new System.Drawing.Size(358, 26);
+            this.labelRecogniserDetailsWarning.TabIndex = 26;
+            this.labelRecogniserDetailsWarning.Text = "Missing or incorrect azure subscription key or form recogniser endpoint. Edit in " +
+    "the api keys window.";
+            this.labelRecogniserDetailsWarning.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelRecogniserDetailsWarning.Visible = false;
             // 
             // Form1
             // 
@@ -375,6 +403,8 @@ namespace compx374winform
         private Label label5;
         private Label label6;
         private Label label7;
+        private Label labelStorageStringWarning;
+        private Label labelRecogniserDetailsWarning;
     }
 }
 
