@@ -462,8 +462,16 @@ namespace compx374winform
 
         private async void ButtonDeleteModel_Click(object sender, EventArgs e)
         {
-            await trainingClient.DeleteModelAsync(modelId = listBoxModels.SelectedItem.ToString().Split(' ')[0]);
-            LoadModels();
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this model?", "Warning!", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                await trainingClient.DeleteModelAsync(modelId = listBoxModels.SelectedItem.ToString().Split(' ')[0]);
+                LoadModels();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                
+            }
         }
 
         private void ApiKeysToolStripMenuItem_Click(object sender, EventArgs e)

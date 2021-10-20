@@ -86,6 +86,7 @@ namespace compx374winform
             // 
             // listBoxContainers
             // 
+            this.listBoxContainers.BackColor = System.Drawing.SystemColors.Control;
             this.listBoxContainers.FormattingEnabled = true;
             this.listBoxContainers.Location = new System.Drawing.Point(205, 58);
             this.listBoxContainers.Name = "listBoxContainers";
@@ -95,6 +96,7 @@ namespace compx374winform
             // 
             // listBoxBlobs
             // 
+            this.listBoxBlobs.BackColor = System.Drawing.SystemColors.Control;
             this.listBoxBlobs.FormattingEnabled = true;
             this.listBoxBlobs.Location = new System.Drawing.Point(466, 59);
             this.listBoxBlobs.Name = "listBoxBlobs";
