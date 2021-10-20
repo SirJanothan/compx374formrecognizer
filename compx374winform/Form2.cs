@@ -33,7 +33,7 @@ namespace compx374winform
             Properties.Settings.Default["subscriptionKey"] = textBoxSubKey.Text;
             Properties.Settings.Default["recogniserEndpoint"] = textBoxRecogniserEndpoint.Text;
             Properties.Settings.Default.Save();
-            mainForm.loadSettings();
+            mainForm.initialise();
             Close();
         }
 

@@ -14,16 +14,13 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-
+using System.Threading;
 
 namespace compx374winform
 {
     public partial class Form1 : Form
     {
-        // recogniserEndpoint = "https://jonathan-eddy-form-recognizer.cognitiveservices.azure.com/";
-        // subscriptionKey = "0a4823585ca04c5d991705bc318679b4";
-        // storageAccString = "DefaultEndpointsProtocol=https;AccountName=jonathaneddy374;AccountKey=MtRw600avh4qhcrQqxWL2FSXshnZ2pp4ovcQVkQEvugyxIUhVzJFnNCKf2j7pzk+tWdO9hUmngLw0hllFv4BmQ==;EndpointSuffix=core.windows.net";
-        
+
         private static string recogniserEndpoint;
         private static string subscriptionKey;
         private static string storageAccString;
@@ -40,13 +37,18 @@ namespace compx374winform
         {
             InitializeComponent();
 
+            initialise();
+
+        }
+        public void initialise()
+        {
+
 
             loadSettings();
 
             if (recogniserEndpoint == null || recogniserEndpoint == "" || subscriptionKey == null || subscriptionKey == "")
             {
-                MessageBox.Show("Please set the azure subscription key and recogniser endpoint");
-
+                new Thread(() => MessageBox.Show("Please set the azure subscription key and recogniser endpoint")).Start();
                 openApiKeys();
                 return;
             }
@@ -66,19 +68,108 @@ namespace compx374winform
 
         private static FormRecognizerClient AuthenticateClient()
         {
-            var credential = new AzureKeyCredential(subscriptionKey);
-            var client = new FormRecognizerClient(new Uri(recogniserEndpoint), credential);
-            return client;
+            try
+            {
+                var credential = new AzureKeyCredential(subscriptionKey);
+                var client = new FormRecognizerClient(new Uri(recogniserEndpoint), credential);
+                return client;
+            }
+            catch(Exception ex)
+            {
+                new Thread(() => MessageBox.Show("Error while Authenticating client, please check the api subscrition key.")).Start();
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         static private FormTrainingClient AuthenticateTrainingClient()
         {
-            var credential = new AzureKeyCredential(subscriptionKey);
-            var client = new FormTrainingClient(new Uri(recogniserEndpoint), credential);
-            return client;
+            try
+            {
+                var credential = new AzureKeyCredential(subscriptionKey);
+                var client = new FormTrainingClient(new Uri(recogniserEndpoint), credential);
+                return client;
+            }
+            catch (Exception ex)
+            {
+                new Thread(() => MessageBox.Show("Error while Authenticating client, please check the api subscrition key.")).Start();
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
 
+        private void LoadModels()
+        {
+            try
+            {
+                AccountProperties accountProperties = trainingClient.GetAccountProperties();
+                //Console.WriteLine($"Account has {accountProperties.CustomModelCount} models.");
+                //Console.WriteLine($"It can have at most {accountProperties.CustomModelLimit} models.");
+                labelModelCount.Text = $"{accountProperties.CustomModelCount}/{accountProperties.CustomModelLimit}";
+                Pageable<CustomFormModelInfo> models = trainingClient.GetCustomModels();
+                listBoxModels.Items.Clear();
+                foreach (CustomFormModelInfo modelInfo in models)
+                {
+                    listBoxModels.Items.Add(modelInfo.ModelId.PadRight(40) + modelInfo.TrainingStartedOn);
+                    //Console.WriteLine($"Custom Model Info:");
+                    //Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
+                    //Console.WriteLine($"    Model Status: {modelInfo.Status}");
+                    //Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
+                    //Console.WriteLine($"    Training model completed on: {modelInfo.TrainingCompletedOn}");
+                }
+            }
+            catch(Exception ex)
+            {
+                new Thread(() => MessageBox.Show("Error while loading custom models, please check the form recogniser endpoint in the api keys window.")).Start();
+                Console.WriteLine(ex.Message);
+            }
+        }
+        private void LoadContainers()
+        {
+            try
+            {
+                Console.WriteLine(storageAccString);
+                if (storageAccString == null || storageAccString == "")
+                {
+                    new Thread(() => MessageBox.Show("Set the storage account string in the api keys window")).Start();
+
+                    return;
+                }
+                BlobServiceClient blobServiceClient = new BlobServiceClient(storageAccString);
+                var segmentSize = 10;
+                var containers = blobServiceClient.GetBlobContainersAsync();
+                listBoxContainers.Items.Clear();
+                try
+                {
+                    // Call the listing operation and enumerate the result segment.
+                    var resultSegment =
+                        blobServiceClient.GetBlobContainers(BlobContainerTraits.Metadata, null, default)
+                        .AsPages(default, segmentSize);
+                    foreach (Azure.Page<BlobContainerItem> containerPage in resultSegment)
+                    {
+                        foreach (BlobContainerItem containerItem in containerPage.Values)
+                        {
+                            listBoxContainers.Items.Add(containerItem.Name);
+                            //Console.WriteLine("Container name: {0}", containerItem.Name);
+                        }
+
+                        //Console.WriteLine();
+                    }
+                }
+                catch (RequestFailedException e)
+                {
+                    Console.WriteLine(e.Message);
+                    Console.ReadLine();
+                    throw;
+                }
+            }
+            catch(Exception ex)
+            {
+                new Thread(() => MessageBox.Show("Error while loading blob storage, please check the storage account string in the api keys window.")).Start();
+                Console.WriteLine(ex.ToString());
+            }
+        }
 
         private static async Task<String> TrainModel(FormTrainingClient trainingClient, string trainingDataUrl)
         {
@@ -202,60 +293,6 @@ namespace compx374winform
                         }
                     }
                 }
-            }
-        }
-        private void LoadModels()
-        {
-            AccountProperties accountProperties = trainingClient.GetAccountProperties();
-            Console.WriteLine($"Account has {accountProperties.CustomModelCount} models.");
-            Console.WriteLine($"It can have at most {accountProperties.CustomModelLimit} models.");
-            labelModelCount.Text = $"{accountProperties.CustomModelCount}/{accountProperties.CustomModelLimit}";
-            Pageable<CustomFormModelInfo> models = trainingClient.GetCustomModels();
-            listBoxModels.Items.Clear();
-            foreach (CustomFormModelInfo modelInfo in models)
-            {
-                listBoxModels.Items.Add(modelInfo.ModelId.PadRight(40) + modelInfo.TrainingStartedOn);
-                Console.WriteLine($"Custom Model Info:");
-                Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
-                Console.WriteLine($"    Model Status: {modelInfo.Status}");
-                Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
-                Console.WriteLine($"    Training model completed on: {modelInfo.TrainingCompletedOn}");
-            }
-        }
-        private void LoadContainers()
-        {
-            Console.WriteLine(storageAccString);
-            if (storageAccString == null || storageAccString == "")
-            {
-                MessageBox.Show("Set the storage account string in the api keys window");
-                return;
-            }
-            BlobServiceClient blobServiceClient = new BlobServiceClient(storageAccString);
-            var segmentSize = 10;
-            var containers = blobServiceClient.GetBlobContainersAsync();
-            listBoxContainers.Items.Clear();
-            try
-            {
-                // Call the listing operation and enumerate the result segment.
-                var resultSegment =
-                    blobServiceClient.GetBlobContainers(BlobContainerTraits.Metadata, null, default)
-                    .AsPages(default, segmentSize);
-                foreach (Azure.Page<BlobContainerItem> containerPage in resultSegment)
-                {
-                    foreach (BlobContainerItem containerItem in containerPage.Values)
-                    {
-                        listBoxContainers.Items.Add(containerItem.Name);
-                        Console.WriteLine("Container name: {0}", containerItem.Name);
-                    }
-
-                    Console.WriteLine();
-                }
-            }
-            catch (RequestFailedException e)
-            {
-                Console.WriteLine(e.Message);
-                Console.ReadLine();
-                throw;
             }
         }
 
@@ -425,8 +462,16 @@ namespace compx374winform
 
         private async void ButtonDeleteModel_Click(object sender, EventArgs e)
         {
-            await trainingClient.DeleteModelAsync(modelId = listBoxModels.SelectedItem.ToString().Split(' ')[0]);
-            LoadModels();
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this model?", "Warning!", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                await trainingClient.DeleteModelAsync(modelId = listBoxModels.SelectedItem.ToString().Split(' ')[0]);
+                LoadModels();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                
+            }
         }
 
         private void ApiKeysToolStripMenuItem_Click(object sender, EventArgs e)
@@ -439,7 +484,7 @@ namespace compx374winform
             if (apiKeysForm == null)
             {
                 apiKeysForm = new Form2(this);
-                apiKeysForm.Show();
+                apiKeysForm.ShowDialog(this);
             }
             else
             {
@@ -451,5 +496,8 @@ namespace compx374winform
         {
             await TrainModel(trainingClient, selectedContainerClient.Uri.ToString());
         }
+
     }
+
+
 }
