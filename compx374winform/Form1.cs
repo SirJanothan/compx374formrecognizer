@@ -387,6 +387,7 @@ namespace compx374winform
             if (listBoxContainers.SelectedIndex != -1)
             {
                 buttonUploadFile.Enabled = true;
+                buttonNewModel.Enabled = true;
                 selectedContainerClient = new BlobContainerClient(storageAccString, listBoxContainers.SelectedItem.ToString());
                 await ListBlobsFlatListing(selectedContainerClient);
             }
@@ -514,12 +515,16 @@ namespace compx374winform
 
         private async void ButtonNewModel_Click(object sender, EventArgs e)
         {
-            await TrainModel(trainingClient, selectedContainerClient.Uri.ToString());
+            // go to second tab
+            tabControl1.SelectedIndex = 1;
         }
 
         private void TextBoxContainerName_TextChanged(object sender, EventArgs e)
         {
+            // reset the non unique error text
             labelNonUniqueError.Visible = false;
+
+            // disable the button if the name field is empty
             if (textBoxContainerName.Text.Length < 1)
             {
                 buttonNewContainer.Enabled = false;
@@ -527,6 +532,15 @@ namespace compx374winform
             {
                 buttonNewContainer.Enabled = true;
             }
+        }
+
+        private async void Button1_Click(object sender, EventArgs e)
+        {
+
+            await TrainModel(trainingClient, selectedContainerClient.Uri.ToString());
+            // go back to model screen
+            LoadModels();
+            tabControl1.SelectedIndex = 0;
         }
     }
 

@@ -43,20 +43,22 @@ namespace compx374winform
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.listBoxModels = new System.Windows.Forms.ListBox();
-            this.buttonNewModel = new System.Windows.Forms.Button();
+            this.buttonGotoContainerView = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.buttonAnalyze = new System.Windows.Forms.Button();
             this.labelModelCount = new System.Windows.Forms.Label();
             this.buttonDeleteModel = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.labelRecogniserDetailsWarning = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label8 = new System.Windows.Forms.Label();
+            this.buttonNewModel = new System.Windows.Forms.Button();
+            this.labelNonUniqueError = new System.Windows.Forms.Label();
+            this.labelStorageStringWarning = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.labelStorageStringWarning = new System.Windows.Forms.Label();
-            this.labelRecogniserDetailsWarning = new System.Windows.Forms.Label();
-            this.labelNonUniqueError = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -129,9 +131,9 @@ namespace compx374winform
             this.buttonUploadFile.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.buttonUploadFile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.buttonUploadFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonUploadFile.Location = new System.Drawing.Point(205, 174);
+            this.buttonUploadFile.Location = new System.Drawing.Point(466, 174);
             this.buttonUploadFile.Name = "buttonUploadFile";
-            this.buttonUploadFile.Size = new System.Drawing.Size(509, 23);
+            this.buttonUploadFile.Size = new System.Drawing.Size(248, 23);
             this.buttonUploadFile.TabIndex = 11;
             this.buttonUploadFile.Text = "Upload File to Container";
             this.buttonUploadFile.UseVisualStyleBackColor = false;
@@ -184,21 +186,20 @@ namespace compx374winform
             this.listBoxModels.TabIndex = 16;
             this.listBoxModels.SelectedIndexChanged += new System.EventHandler(this.ListBoxModels_SelectedIndexChanged);
             // 
-            // buttonNewModel
+            // buttonGotoContainerView
             // 
-            this.buttonNewModel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.buttonNewModel.Enabled = false;
-            this.buttonNewModel.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
-            this.buttonNewModel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.buttonNewModel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.buttonNewModel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonNewModel.Location = new System.Drawing.Point(604, 6);
-            this.buttonNewModel.Name = "buttonNewModel";
-            this.buttonNewModel.Size = new System.Drawing.Size(106, 26);
-            this.buttonNewModel.TabIndex = 17;
-            this.buttonNewModel.Text = "Train New Model";
-            this.buttonNewModel.UseVisualStyleBackColor = false;
-            this.buttonNewModel.Click += new System.EventHandler(this.ButtonNewModel_Click);
+            this.buttonGotoContainerView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.buttonGotoContainerView.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
+            this.buttonGotoContainerView.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.buttonGotoContainerView.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.buttonGotoContainerView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonGotoContainerView.Location = new System.Drawing.Point(604, 6);
+            this.buttonGotoContainerView.Name = "buttonGotoContainerView";
+            this.buttonGotoContainerView.Size = new System.Drawing.Size(106, 26);
+            this.buttonGotoContainerView.TabIndex = 17;
+            this.buttonGotoContainerView.Text = "Train New Model";
+            this.buttonGotoContainerView.UseVisualStyleBackColor = false;
+            this.buttonGotoContainerView.Click += new System.EventHandler(this.ButtonNewModel_Click);
             // 
             // label4
             // 
@@ -266,7 +267,7 @@ namespace compx374winform
             this.tabPage1.Controls.Add(this.labelRecogniserDetailsWarning);
             this.tabPage1.Controls.Add(this.buttonAnalyze);
             this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.buttonNewModel);
+            this.tabPage1.Controls.Add(this.buttonGotoContainerView);
             this.tabPage1.Controls.Add(this.buttonDeleteModel);
             this.tabPage1.Controls.Add(this.listBoxModels);
             this.tabPage1.ForeColor = System.Drawing.Color.Black;
@@ -276,6 +277,18 @@ namespace compx374winform
             this.tabPage1.Size = new System.Drawing.Size(720, 418);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Form Recogniser Models";
+            // 
+            // labelRecogniserDetailsWarning
+            // 
+            this.labelRecogniserDetailsWarning.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.labelRecogniserDetailsWarning.Location = new System.Drawing.Point(232, 6);
+            this.labelRecogniserDetailsWarning.Name = "labelRecogniserDetailsWarning";
+            this.labelRecogniserDetailsWarning.Size = new System.Drawing.Size(358, 26);
+            this.labelRecogniserDetailsWarning.TabIndex = 26;
+            this.labelRecogniserDetailsWarning.Text = "Missing or incorrect azure subscription key or form recogniser endpoint. Edit in " +
+    "the api keys window.";
+            this.labelRecogniserDetailsWarning.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelRecogniserDetailsWarning.Visible = false;
             // 
             // label5
             // 
@@ -290,6 +303,8 @@ namespace compx374winform
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Controls.Add(this.buttonNewModel);
             this.tabPage2.Controls.Add(this.labelNonUniqueError);
             this.tabPage2.Controls.Add(this.labelStorageStringWarning);
             this.tabPage2.Controls.Add(this.label6);
@@ -308,6 +323,54 @@ namespace compx374winform
             this.tabPage2.Size = new System.Drawing.Size(720, 418);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Containers";
+            // 
+            // label8
+            // 
+            this.label8.Location = new System.Drawing.Point(9, 171);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(170, 46);
+            this.label8.TabIndex = 28;
+            this.label8.Text = "Train new custom form recogniser model with contents from selected blob storage c" +
+    "ontainer.";
+            // 
+            // buttonNewModel
+            // 
+            this.buttonNewModel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.buttonNewModel.Enabled = false;
+            this.buttonNewModel.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
+            this.buttonNewModel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.buttonNewModel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.buttonNewModel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonNewModel.Location = new System.Drawing.Point(205, 171);
+            this.buttonNewModel.Name = "buttonNewModel";
+            this.buttonNewModel.Size = new System.Drawing.Size(243, 43);
+            this.buttonNewModel.TabIndex = 27;
+            this.buttonNewModel.Text = "Train New Model";
+            this.buttonNewModel.UseVisualStyleBackColor = false;
+            this.buttonNewModel.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // labelNonUniqueError
+            // 
+            this.labelNonUniqueError.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.labelNonUniqueError.Location = new System.Drawing.Point(9, 110);
+            this.labelNonUniqueError.Name = "labelNonUniqueError";
+            this.labelNonUniqueError.Size = new System.Drawing.Size(152, 27);
+            this.labelNonUniqueError.TabIndex = 26;
+            this.labelNonUniqueError.Text = "Containers must have unique names.";
+            this.labelNonUniqueError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelNonUniqueError.Visible = false;
+            // 
+            // labelStorageStringWarning
+            // 
+            this.labelStorageStringWarning.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.labelStorageStringWarning.Location = new System.Drawing.Point(205, 9);
+            this.labelStorageStringWarning.Name = "labelStorageStringWarning";
+            this.labelStorageStringWarning.Size = new System.Drawing.Size(509, 18);
+            this.labelStorageStringWarning.TabIndex = 25;
+            this.labelStorageStringWarning.Text = "Missing or incorrect storage account string. Enter your storage string in the api" +
+    " keys window.";
+            this.labelStorageStringWarning.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelStorageStringWarning.Visible = false;
             // 
             // label6
             // 
@@ -330,47 +393,12 @@ namespace compx374winform
             this.label7.TabIndex = 24;
             this.label7.Text = "______________________________________________________________________";
             // 
-            // labelStorageStringWarning
-            // 
-            this.labelStorageStringWarning.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.labelStorageStringWarning.Location = new System.Drawing.Point(205, 9);
-            this.labelStorageStringWarning.Name = "labelStorageStringWarning";
-            this.labelStorageStringWarning.Size = new System.Drawing.Size(509, 18);
-            this.labelStorageStringWarning.TabIndex = 25;
-            this.labelStorageStringWarning.Text = "Missing or incorrect storage account string. Enter your storage string in the api" +
-    " keys window.";
-            this.labelStorageStringWarning.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelStorageStringWarning.Visible = false;
-            // 
-            // labelRecogniserDetailsWarning
-            // 
-            this.labelRecogniserDetailsWarning.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.labelRecogniserDetailsWarning.Location = new System.Drawing.Point(232, 6);
-            this.labelRecogniserDetailsWarning.Name = "labelRecogniserDetailsWarning";
-            this.labelRecogniserDetailsWarning.Size = new System.Drawing.Size(358, 26);
-            this.labelRecogniserDetailsWarning.TabIndex = 26;
-            this.labelRecogniserDetailsWarning.Text = "Missing or incorrect azure subscription key or form recogniser endpoint. Edit in " +
-    "the api keys window.";
-            this.labelRecogniserDetailsWarning.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelRecogniserDetailsWarning.Visible = false;
-            // 
-            // labelNonUniqueError
-            // 
-            this.labelNonUniqueError.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.labelNonUniqueError.Location = new System.Drawing.Point(9, 110);
-            this.labelNonUniqueError.Name = "labelNonUniqueError";
-            this.labelNonUniqueError.Size = new System.Drawing.Size(152, 27);
-            this.labelNonUniqueError.TabIndex = 26;
-            this.labelNonUniqueError.Text = "Containers must have unique names.";
-            this.labelNonUniqueError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelNonUniqueError.Visible = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(728, 255);
+            this.ClientSize = new System.Drawing.Size(728, 272);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labelModelCount);
             this.Controls.Add(this.label4);
@@ -404,7 +432,7 @@ namespace compx374winform
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListBox listBoxModels;
-        private System.Windows.Forms.Button buttonNewModel;
+        private System.Windows.Forms.Button buttonGotoContainerView;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button buttonAnalyze;
         private System.Windows.Forms.Label labelModelCount;
@@ -420,6 +448,8 @@ namespace compx374winform
         private Label labelStorageStringWarning;
         private Label labelRecogniserDetailsWarning;
         private Label labelNonUniqueError;
+        private Label label8;
+        private Button buttonNewModel;
     }
 }
 
