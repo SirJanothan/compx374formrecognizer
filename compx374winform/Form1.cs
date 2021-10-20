@@ -20,6 +20,10 @@ namespace compx374winform
 {
     public partial class Form1 : Form
     {
+        // recogniserEndpoint = "https://jonathan-eddy-form-recognizer.cognitiveservices.azure.com/";
+        // subscriptionKey = "0a4823585ca04c5d991705bc318679b4";
+        // storageAccString = "DefaultEndpointsProtocol=https;AccountName=jonathaneddy374;AccountKey=MtRw600avh4qhcrQqxWL2FSXshnZ2pp4ovcQVkQEvugyxIUhVzJFnNCKf2j7pzk+tWdO9hUmngLw0hllFv4BmQ==;EndpointSuffix=core.windows.net";
+        
         private static string recogniserEndpoint;
         private static string subscriptionKey;
         private static string storageAccString;
@@ -421,12 +425,8 @@ namespace compx374winform
 
         private async void ButtonDeleteModel_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this model?", "Warning", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                await trainingClient.DeleteModelAsync(modelId = listBoxModels.SelectedItem.ToString().Split(' ')[0]);
-                LoadModels();
-            }
+            await trainingClient.DeleteModelAsync(modelId = listBoxModels.SelectedItem.ToString().Split(' ')[0]);
+            LoadModels();
         }
 
         private void ApiKeysToolStripMenuItem_Click(object sender, EventArgs e)
@@ -447,9 +447,9 @@ namespace compx374winform
             }
         }
 
-        private void ButtonNewModel_Click(object sender, EventArgs e)
+        private async void ButtonNewModel_Click(object sender, EventArgs e)
         {
-
+            await TrainModel(trainingClient, selectedContainerClient.Uri.ToString());
         }
     }
 }
