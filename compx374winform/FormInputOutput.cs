@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure;
 using Azure.AI.FormRecognizer;
 using Azure.AI.FormRecognizer.Models;
@@ -16,14 +13,12 @@ namespace compx374winform
 {
     public static class FormInputOutput
     {
-        private static String defaultFilePath = "\\FormJsonOutput"; //default file saving and loading location, mainly for testing
+        private static String defaultFilePath = "\\FormJsonOutput"; //default file saving and loading location
         private static String formRunsSubfolders = "\\FormRun_";
 
         //takes in all the forms in a form collection (when Analyzing Forms) and outputs serialized json files for all the forms
         public static void saveForms(RecognizedFormCollection forms)
         {
-            //Console.WriteLine("Is save forms even running?");
-
             try
             {
                 // Try to create the directory.
@@ -59,6 +54,7 @@ namespace compx374winform
             }
         }
 
+        //serializes a LoadedFormData object and saves a JSON file in the specified filePath
         public static void serializeFormData(LoadedFormData formData, String filePath)
         {
             using (StreamWriter sw = File.CreateText(filePath))
@@ -66,7 +62,7 @@ namespace compx374winform
                 formData.printFieldContents();
                 var options = new JsonSerializerOptions { WriteIndented = true };
                 string jsonString = JsonSerializer.Serialize<LoadedFormData>(formData, options);
-                Console.WriteLine("Json String: " + jsonString);
+                //Console.WriteLine("Json String: " + jsonString);
                 sw.Write(jsonString);
             }
         }
@@ -76,6 +72,7 @@ namespace compx374winform
             serializeFormData(new LoadedFormData(form), filePath);
         }
 
+        //untested and unused at the moment
         public static LoadedFormData deserializeFormData(String filePath)
         {
             try
@@ -92,6 +89,8 @@ namespace compx374winform
                 return null;
             }
         }
+
+        //----------------------------------------Unused methods passed this point, may become useful at some point in the future but that's probably not likely------------------------------------------
 
         //deserialization doesn't appear to work on RecognisedForm for whatever reason
         public static RecognizedForm deserializeTest(RecognizedForm form, String filePath)
@@ -110,8 +109,6 @@ namespace compx374winform
                 return null;
             }
         }
-
-        
 
         //just writes form data to a text file
         //not using this anymore since I remembered serialization is a thing and is just better than this in every way
