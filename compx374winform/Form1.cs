@@ -317,7 +317,7 @@ namespace compx374winform
                 string containerName = name;
 
                 // Create the container and return a container client object
-                return await blobServiceClient.CreateBlobContainerAsync(containerName);
+                return await blobServiceClient.CreateBlobContainerAsync(containerName, Azure.Storage.Blobs.Models.PublicAccessType.BlobContainer);
             } catch(RequestFailedException ex)
             {
                 labelNonUniqueError.Visible = true;

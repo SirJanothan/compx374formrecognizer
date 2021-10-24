@@ -33,7 +33,6 @@ namespace compx374winform
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.apiKeysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listBoxContainers = new System.Windows.Forms.ListBox();
             this.listBoxBlobs = new System.Windows.Forms.ListBox();
             this.buttonNewContainer = new System.Windows.Forms.Button();
@@ -68,8 +67,7 @@ namespace compx374winform
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.apiKeysToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.apiKeysToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(728, 24);
@@ -82,12 +80,6 @@ namespace compx374winform
             this.apiKeysToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
             this.apiKeysToolStripMenuItem.Text = "Api Keys";
             this.apiKeysToolStripMenuItem.Click += new System.EventHandler(this.ApiKeysToolStripMenuItem_Click);
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
             // 
             // listBoxContainers
             // 
@@ -438,7 +430,6 @@ namespace compx374winform
         private System.Windows.Forms.Label labelModelCount;
         private System.Windows.Forms.Button buttonDeleteModel;
         private System.Windows.Forms.ToolStripMenuItem apiKeysToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
