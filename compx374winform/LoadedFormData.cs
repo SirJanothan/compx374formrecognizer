@@ -33,95 +33,112 @@ namespace compx374winform
 
                 String value = "";
 
-                //I wish there was a better way to do this but alas
-                if(fieldType is FieldValueType.SelectionMark)
+                try
                 {
-                    //Console.WriteLine("Selection Mark State is: " + field.Value.AsSelectionMarkState());
-                    value = field.Value.AsSelectionMarkState().ToString();
-                }
-                else if (fieldType is FieldValueType.Dictionary)
-                {
-                    value = "dictionary";
-
-                    IReadOnlyDictionary<string, FormField> dictionaryValue = field.Value.AsDictionary();
-
-                    foreach(KeyValuePair<string, FormField> keyValPair in dictionaryValue)
+                    //I wish there was a better way to do this but alas
+                    if (fieldType is FieldValueType.SelectionMark)
                     {
-                        FormField row = keyValPair.Value;
-                        FieldValueType rowType = row.Value.ValueType;
-                        //Console.WriteLine("Key: " + keyValPair.Key + ", Value: " + rowType);
+                        //Console.WriteLine("Selection Mark State is: " + field.Value.AsSelectionMarkState());
+                        value = field.Value.AsSelectionMarkState().ToString();
+                    }
+                    else if (fieldType is FieldValueType.Dictionary)
+                    {
+                        value = "dictionary";
 
-                        if (rowType is FieldValueType.Dictionary)
+                        IReadOnlyDictionary<string, FormField> dictionaryValue = field.Value.AsDictionary();
+
+                        foreach (KeyValuePair<string, FormField> keyValPair in dictionaryValue)
                         {
-                            IReadOnlyDictionary<string, FormField> subDictionaryValue = row.Value.AsDictionary();
+                            FormField row = keyValPair.Value;
+                            FieldValueType rowType = row.Value.ValueType;
+                            //Console.WriteLine("Key: " + keyValPair.Key + ", Value: " + rowType);
 
-                            foreach (KeyValuePair<string,FormField> subKVP in subDictionaryValue)
+                            if (rowType is FieldValueType.Dictionary)
                             {
-                                FormField tableSubField = subKVP.Value;
-                                FieldValueType tableSubFieldType = tableSubField.Value.ValueType;
-                                //Console.WriteLine("SubKey: " + subKVP.Key + ", SubValueType: " + tableSubFieldType);
-                                String tableVal = "";
+                                IReadOnlyDictionary<string, FormField> subDictionaryValue = row.Value.AsDictionary();
 
-                                if (tableSubFieldType is FieldValueType.SelectionMark)
+                                foreach (KeyValuePair<string, FormField> subKVP in subDictionaryValue)
                                 {
-                                    //Console.WriteLine("Sub:SelectionMarkValue?: " + tableSubField.Value.AsSelectionMarkState().ToString());
-                                    tableVal = tableSubField.Value.AsSelectionMarkState().ToString();
+                                    FormField tableSubField = subKVP.Value;
+                                    FieldValueType tableSubFieldType = tableSubField.Value.ValueType;
+                                    //Console.WriteLine("SubKey: " + subKVP.Key + ", SubValueType: " + tableSubFieldType);
+                                    String tableVal = "";
+
+                                    try
+                                    {
+                                        if (tableSubFieldType is FieldValueType.SelectionMark)
+                                        {
+                                            //Console.WriteLine("Sub:SelectionMarkValue?: " + tableSubField.Value.AsSelectionMarkState().ToString());
+                                            tableVal = tableSubField.Value.AsSelectionMarkState().ToString();
+                                        }
+                                        else if (tableSubFieldType is FieldValueType.String)
+                                        {
+                                            //Console.WriteLine("Sub:String?: " + tableSubField.Value.AsString());
+                                            tableVal = tableSubField.Value.AsString();
+                                        }
+                                        else
+                                        {
+                                            tableVal = "value from unkown/unhandled type";
+                                            //Console.WriteLine("Unhandled type: " + tableSubFieldType.ToString());
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        tableVal = "unknown/unhandled type (from program error)";
+                                        Console.WriteLine("An error occured when attempting to parse the type of a form field when loading the form data (Dictionary Second Level/Columns): " + ex.ToString());
+                                    }
+
+                                    //For now I am just adding all the values from a table into the general list of key value pairs (formFields)
+                                    //I ran out of time to implement a better way of doing this that preserved the table structure, the the data is still there with it's row/column index noted as it's 'Field'
+
+                                    Dictionary<String, String> stringSubField = new Dictionary<String, String>();
+
+                                    stringSubField.Add("Field", (row.Name + ":" + tableSubField.Name));
+                                    if (tableSubField.LabelData != null) { stringSubField.Add("Label", field.LabelData); }
+                                    stringSubField.Add("Value", tableVal + "");
+                                    stringSubField.Add("Confidence:", tableSubField.Confidence + "");
+
+                                    formFields.Add(stringSubField);
                                 }
-                                else if (tableSubFieldType is FieldValueType.String){
-                                    //Console.WriteLine("Sub:String?: " + tableSubField.Value.AsString());
-                                    tableVal = tableSubField.Value.AsString();
-                                }
-                                else
-                                {
-                                    tableVal = "value from unkown/unhandled type";
-                                    //Console.WriteLine("Unhandled type: " + tableSubFieldType.ToString());
-                                }
-
-                                //For now I am just adding all the values from a table into the general list of key value pairs (formFields)
-                                //I ran out of time to implement a better way of doing this that preserved the table structure, the the data is still there with it's row/column index noted as it's 'Field'
-
-                                Dictionary<String, String> stringSubField = new Dictionary<String, String>();
-
-                                stringSubField.Add("Field", (row.Name + ":" + tableSubField.Name)); 
-                                if (tableSubField.LabelData != null) { stringSubField.Add("Label", field.LabelData); }
-                                stringSubField.Add("Value", tableVal + "");
-                                stringSubField.Add("Confidence:", tableSubField.Confidence + "");
-
-                                formFields.Add(stringSubField);
+                            }
+                            else if (rowType is FieldValueType.SelectionMark)
+                            {
+                                Console.WriteLine("SelectionMarkValue?: " + row.Value.AsSelectionMarkState().ToString());
+                                Console.WriteLine("This shouldn't show up in the console");
+                                //dicVal = subField.Value.AsSelectionMarkState().ToString();
+                            }
+                            else
+                            {
+                                Console.WriteLine("Type?: " + rowType.ToString());
+                                Console.WriteLine("This shouldn't show up in the console");
                             }
                         }
-                        else if (rowType is FieldValueType.SelectionMark)
-                        {
-                            Console.WriteLine("SelectionMarkValue?: " + row.Value.AsSelectionMarkState().ToString());
-                            Console.WriteLine("This shouldn't show up in the console");
-                            //dicVal = subField.Value.AsSelectionMarkState().ToString();
-                        }
-                        else
-                        {
-                            Console.WriteLine("Type?: " + rowType.ToString());
-                            Console.WriteLine("This shouldn't show up in the console");
-                        }
                     }
-                }
-                else if (fieldType is FieldValueType.Date)
-                {
-                    value = field.Value.AsDate().ToString();
-                }
-                else if (fieldType is FieldValueType.Float)
-                {
-                    value = field.Value.AsFloat().ToString();
-                }
-                else if (fieldType is FieldValueType.String)
-                {
-                    try //I've run into some cases where a string is returned as null for some reason, so best to handle it gracefully even if no value is found
+                    else if (fieldType is FieldValueType.Date)
                     {
-                        value = field.Value.AsString();
+                        value = field.Value.AsDate().ToString();
                     }
-                    catch (Exception ex) { value = "faulty string returned by form recognizer model"; }
+                    else if (fieldType is FieldValueType.Float)
+                    {
+                        value = field.Value.AsFloat().ToString();
+                    }
+                    else if (fieldType is FieldValueType.String)
+                    {
+                        try //I've run into some cases where a string is returned as null for some reason, so best to handle it gracefully even if no value is found
+                        {
+                            value = field.Value.AsString();
+                        }
+                        catch (Exception ex) { value = "faulty string returned by form recognizer model"; }
+                    }
+                    else
+                    {
+                        value = "value from unkown/unhandled type";
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    value = "value from unkown/unhandled type";
+                    value = "unknown/unhandled type (from program error)";
+                    Console.WriteLine("An error occured when attempting to parse the type of a form field when loading the form data (Top Level Form Field): " + ex.ToString());
                 }
 
                 stringField.Add("Value", value + "");
@@ -130,15 +147,14 @@ namespace compx374winform
                 formFields.Add(stringField);
             }
 
-            if(tableData == null)
-            {
-                tableData = new List<Dictionary<String, String>>();
-            }
-
             //This is data that is automatically extracted from the form
             //Not related to labelled data, it's just something that azure does for you, but is ultimately sort of useless since it's not great at picking up what's a table and what's not
             //I've commented it out for now, however if anyone feels the need to use it again it's there
 
+            //if (tableData == null)
+            //{
+            //    tableData = new List<Dictionary<String, String>>();
+            //}
 
             /*foreach (FormPage page in form.Pages)
             {
